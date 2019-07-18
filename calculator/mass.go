@@ -9,41 +9,40 @@ const (
 )
 
 var (
-	input  float64
 	grams  float64
 	pounds float64
 )
 
 type FromMass struct{}
 
-func (from FromMass) FromMilligram() ToMass {
+func (from FromMass) FromMilligram() *ToMass {
 	grams = input / milligramsInGrams
 	pounds = grams / poundsInGrams
-	return ToMass{}
+	return &ToMass{}
 }
 
-func (from FromMass) FromGram() ToMass {
+func (from FromMass) FromGram() *ToMass {
 	grams = input
 	pounds = input / poundsInGrams
-	return ToMass{}
+	return &ToMass{}
 }
 
-func (from FromMass) FromKilogram() ToMass {
+func (from FromMass) FromKilogram() *ToMass {
 	grams = input / kilogramsInGrams
 	pounds = grams / poundsInGrams
-	return ToMass{}
+	return &ToMass{}
 }
 
-func (from FromMass) FromPounds() ToMass {
+func (from FromMass) FromPounds() *ToMass {
 	grams = input * poundsInGrams
 	pounds = input
-	return ToMass{}
+	return &ToMass{}
 }
 
-func (from FromMass) FromOunces() ToMass {
+func (from FromMass) FromOunces() *ToMass {
 	grams = input * ouncesInGrams
 	pounds = input / poundsInOunces
-	return ToMass{}
+	return &ToMass{}
 }
 
 type ToMass struct{}
@@ -68,7 +67,7 @@ func (to ToMass) ToOunces() float64 {
 	return pounds * poundsInOunces
 }
 
-func ConvertMass(value float64) FromMass {
+func ConvertMass(value float64) *FromMass {
 	input = value
-	return FromMass{}
+	return &FromMass{}
 }
