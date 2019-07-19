@@ -15,6 +15,9 @@ const (
 	milliliterSymbol = "ml"
 	literSymbol      = "l"
 	gallonSymbol     = "gal"
+
+	sgSymbol   = "sg"
+	brixSymbol = "ºbx"
 )
 
 func (Unity) Create(value float64, symbol string) Unity {
