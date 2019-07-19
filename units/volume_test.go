@@ -32,8 +32,6 @@ func TestVolume_FromGallon(t *testing.T) {
 	volume := Volume{}.FromGallon(0.26417205235815)
 	stringValue := fmt.Sprint(volume)
 
-	fmt.Println(stringValue)
-
 	if strings.Compare(stringValue, expectedVolumeResponse) != 0 {
 		t.Error("Error on conversion")
 	}
