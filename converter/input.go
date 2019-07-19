@@ -1,4 +1,4 @@
-package calculator
+package converter
 
 var (
 	input float64
