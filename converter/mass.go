@@ -8,66 +8,82 @@ const (
 	poundsInOunces    = 16
 )
 
-var (
-	grams  float64
-	pounds float64
-)
-
-type FromMass struct{}
+type FromMass struct {
+	input float64
+}
 
 func (from FromMass) FromMilligram() *ToMass {
-	grams = input / milligramsInGrams
-	pounds = grams / poundsInGrams
-	return &ToMass{}
+	grams := from.input / milligramsInGrams
+
+	return &ToMass{
+		grams:  grams,
+		pounds: grams / poundsInGrams,
+	}
 }
 
 func (from FromMass) FromGram() *ToMass {
-	grams = input
-	pounds = input / poundsInGrams
-	return &ToMass{}
+	grams := from.input
+
+	return &ToMass{
+		grams:  grams,
+		pounds: from.input / poundsInGrams,
+	}
 }
 
 func (from FromMass) FromKilogram() *ToMass {
-	grams = input / kilogramsInGrams
-	pounds = grams / poundsInGrams
-	return &ToMass{}
+	grams := from.input / kilogramsInGrams
+
+	return &ToMass{
+		grams:  grams,
+		pounds: grams / poundsInGrams,
+	}
 }
 
 func (from FromMass) FromPounds() *ToMass {
-	grams = input * poundsInGrams
-	pounds = input
-	return &ToMass{}
+	grams := from.input * poundsInGrams
+
+	return &ToMass{
+		grams:  grams,
+		pounds: from.input,
+	}
 }
 
 func (from FromMass) FromOunces() *ToMass {
-	grams = input * ouncesInGrams
-	pounds = input / poundsInOunces
-	return &ToMass{}
+	grams := from.input * ouncesInGrams
+
+	return &ToMass{
+		grams:  grams,
+		pounds: from.input / poundsInOunces,
+	}
 }
 
-type ToMass struct{}
+type ToMass struct {
+	grams  float64
+	pounds float64
+}
 
 func (to ToMass) ToMilligram() float64 {
-	return grams * milligramsInGrams
+	return to.grams * milligramsInGrams
 }
 
 func (to ToMass) ToGram() float64 {
-	return grams
+	return to.grams
 }
 
 func (to ToMass) ToKilogram() float64 {
-	return grams * kilogramsInGrams
+	return to.grams * kilogramsInGrams
 }
 
 func (to ToMass) ToPounds() float64 {
-	return pounds
+	return to.pounds
 }
 
 func (to ToMass) ToOunces() float64 {
-	return pounds * poundsInOunces
+	return to.pounds * poundsInOunces
 }
 
 func ConvertMass(value float64) *FromMass {
-	input = value
-	return &FromMass{}
+	return &FromMass{
+		input: value,
+	}
 }

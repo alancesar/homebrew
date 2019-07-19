@@ -5,42 +5,46 @@ const (
 	gallonsInLiters     = 0.26417205235815
 )
 
-var (
-	liters float64
-)
-
-type FromVolume struct{}
+type FromVolume struct {
+	input float64
+}
 
 func (from FromVolume) FromMilliliter() *ToVolume {
-	liters = input / millilitersInLiters
-	return &ToVolume{}
+	return &ToVolume{
+		liters: from.input / millilitersInLiters,
+	}
 }
 
 func (from FromVolume) FromLiter() *ToVolume {
-	liters = input
-	return &ToVolume{}
+	return &ToVolume{
+		liters: from.input,
+	}
 }
 
 func (from FromVolume) FromGallon() *ToVolume {
-	liters = input / gallonsInLiters
-	return &ToVolume{}
+	return &ToVolume{
+		liters: from.input / gallonsInLiters,
+	}
 }
 
-type ToVolume struct{}
+type ToVolume struct {
+	liters float64
+}
 
 func (to ToVolume) ToMilliliter() float64 {
-	return liters * millilitersInLiters
+	return to.liters * millilitersInLiters
 }
 
 func (to ToVolume) ToLiter() float64 {
-	return liters
+	return to.liters
 }
 
 func (to ToVolume) ToGallon() float64 {
-	return liters * gallonsInLiters
+	return to.liters * gallonsInLiters
 }
 
 func ConvertVolume(value float64) *FromVolume {
-	input = value
-	return &FromVolume{}
+	return &FromVolume{
+		input: value,
+	}
 }
