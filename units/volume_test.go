@@ -2,7 +2,6 @@ package units
 
 import (
 	"fmt"
-	"strings"
 	"testing"
 )
 
@@ -14,7 +13,7 @@ func TestVolume_FromMilliliter(t *testing.T) {
 	volume := Volume{}.FromMilliliter(1000.0)
 	stringValue := fmt.Sprint(volume)
 
-	if !strings.EqualFold(stringValue, expectedVolumeResponse) {
+	if stringValue != expectedVolumeResponse {
 		t.Error("Error on conversion")
 	}
 }
@@ -23,7 +22,7 @@ func TestVolume_FromLiter(t *testing.T) {
 	volume := Volume{}.FromLiter(1.0)
 	stringValue := fmt.Sprint(volume)
 
-	if !strings.EqualFold(stringValue, expectedVolumeResponse) {
+	if stringValue != expectedVolumeResponse {
 		t.Error("Error on conversion")
 	}
 }
@@ -32,7 +31,7 @@ func TestVolume_FromGallon(t *testing.T) {
 	volume := Volume{}.FromGallon(0.26417205235815)
 	stringValue := fmt.Sprint(volume)
 
-	if !strings.EqualFold(stringValue, expectedVolumeResponse) {
+	if stringValue != expectedVolumeResponse {
 		t.Error("Error on conversion")
 	}
 }

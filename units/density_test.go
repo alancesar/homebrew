@@ -1,7 +1,6 @@
 package units
 
 import (
-	"strings"
 	"testing"
 )
 
@@ -18,7 +17,7 @@ func TestDensity_FromSg(t *testing.T) {
 		t.Error("Error on conversion")
 	}
 
-	if !strings.EqualFold(brix.Symbol, brixSymbol) {
+	if brix.Symbol != brixSymbol {
 		t.Error("Error on conversion")
 	}
 }
@@ -31,7 +30,7 @@ func TestDensity_FromBrix(t *testing.T) {
 		t.Error("Error on conversion")
 	}
 
-	if !strings.EqualFold(sg.Symbol, sgSymbol) {
+	if sg.Symbol != sgSymbol {
 		t.Error("Error on conversion")
 	}
 }

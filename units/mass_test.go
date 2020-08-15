@@ -2,7 +2,6 @@ package units
 
 import (
 	"fmt"
-	"strings"
 	"testing"
 )
 
@@ -15,7 +14,7 @@ func TestFromMilligram(t *testing.T) {
 	mass := Mass{}.FromMilligram(1000000.0)
 	stringValue := fmt.Sprint(mass)
 
-	if !strings.EqualFold(stringValue, expectedMassResponse) {
+	if stringValue != expectedMassResponse {
 		t.Error("Error on conversion")
 	}
 }
@@ -24,7 +23,7 @@ func TestFromGram(t *testing.T) {
 	mass := Mass{}.FromGram(1000.0)
 	stringValue := fmt.Sprint(mass)
 
-	if !strings.EqualFold(stringValue, expectedMassResponse) {
+	if stringValue != expectedMassResponse {
 		t.Error("Error on conversion")
 	}
 }
@@ -33,7 +32,7 @@ func TestFromKilograms(t *testing.T) {
 	mass := Mass{}.FromKilograms(1.0)
 	stringValue := fmt.Sprint(mass)
 
-	if !strings.EqualFold(stringValue, expectedMassResponse) {
+	if stringValue != expectedMassResponse {
 		t.Error("Error on conversion")
 	}
 }
@@ -42,7 +41,7 @@ func TestFromPounds(t *testing.T) {
 	mass := Mass{}.FromPounds(1.0)
 	stringValue := fmt.Sprint(mass)
 
-	if !strings.EqualFold(stringValue, expectedImperialMassResponse) {
+	if stringValue != expectedImperialMassResponse {
 		t.Error("Error on conversion")
 	}
 }
@@ -51,7 +50,7 @@ func TestFromOunces(t *testing.T) {
 	mass := Mass{}.FromOunces(16.0)
 	stringValue := fmt.Sprint(mass)
 
-	if !strings.EqualFold(stringValue, expectedImperialMassResponse) {
+	if stringValue != expectedImperialMassResponse {
 		t.Error("Error on conversion")
 	}
 }
