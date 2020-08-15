@@ -1,6 +1,6 @@
 package units
 
-import "homebrew/converters"
+import "github.com/alancesar/homebrew/converters"
 
 type Volume struct {
 	Milliliters Unity

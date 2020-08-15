@@ -1,6 +1,6 @@
 package calculators
 
-import "homebrew/entities"
+import "github.com/alancesar/homebrew/entities"
 
 type AbvCalculator struct{}
 

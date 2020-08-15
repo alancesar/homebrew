@@ -1,8 +1,6 @@
 package units
 
-import (
-	"homebrew/converters"
-)
+import "github.com/alancesar/homebrew/converters"
 
 type Mass struct {
 	Milligrams Unity
