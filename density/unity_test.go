@@ -1,16 +1,11 @@
-package units
+package density
 
 import (
 	"testing"
 )
 
-const (
-	expectedMaxBrixValue = 22.0
-	expectedMaxSgValue   = 1.092
-)
-
-func TestDensity_FromSg(t *testing.T) {
-	density := Density{}.FromSg(1.0919)
+func TestSg(t *testing.T) {
+	density := Sg(1.0919)
 	brix := density.Brix
 
 	if brix.Value > expectedMaxBrixValue {
@@ -22,8 +17,8 @@ func TestDensity_FromSg(t *testing.T) {
 	}
 }
 
-func TestDensity_FromBrix(t *testing.T) {
-	density := Density{}.FromBrix(22.00)
+func TestBrix(t *testing.T) {
+	density := Brix(22.00)
 	sg := density.Sg
 
 	if sg.Value > expectedMaxSgValue {

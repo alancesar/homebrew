@@ -5,22 +5,7 @@ type Unity struct {
 	Symbol string
 }
 
-const (
-	milligramSymbol = "mg"
-	gramSymbol      = "g"
-	kilogramSymbol  = "kg"
-	poundSymbol     = "lb"
-	ounceSymbol     = "oz"
-
-	milliliterSymbol = "ml"
-	literSymbol      = "l"
-	gallonSymbol     = "gal"
-
-	sgSymbol   = "sg"
-	brixSymbol = "ºbx"
-)
-
-func (Unity) Create(value float64, symbol string) Unity {
+func New(value float64, symbol string) Unity {
 	return Unity{
 		Value:  value,
 		Symbol: symbol,

@@ -1,4 +1,4 @@
-package converter
+package density
 
 import "testing"
 
@@ -7,16 +7,18 @@ const (
 	expectedMaxSgValue   = 1.092
 )
 
-func TestConvertDensity(t *testing.T) {
+func TestFrom_ToBrix(t *testing.T) {
 	sg := 1.0919
-	brix := ConvertDensity(sg).FromSg().ToBrix()
+	brix := FromSg(sg).ToBrix()
 
 	if brix > expectedMaxBrixValue {
 		t.Error("Unexpected conversion")
 	}
+}
 
-	brix = 22.0
-	sg = ConvertDensity(brix).FromBrix().ToSg()
+func TestFrom_ToSg(t *testing.T) {
+	brix := 22.0
+	sg := FromBrix(brix).ToSg()
 
 	if sg > expectedMaxSgValue {
 		t.Error("Unexpected conversion")

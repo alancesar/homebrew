@@ -1,4 +1,4 @@
-package units
+package mass
 
 import (
 	"fmt"
@@ -10,8 +10,8 @@ const (
 	expectedImperialMassResponse = "{{453592 mg} {453.592 g} {0.453592 kg} {1 lb} {16 oz}}"
 )
 
-func TestFromMilligram(t *testing.T) {
-	mass := Mass{}.FromMilligram(1000000.0)
+func TestMilligram(t *testing.T) {
+	mass := Milligram(1000000.0)
 	stringValue := fmt.Sprint(mass)
 
 	if stringValue != expectedMassResponse {
@@ -19,8 +19,8 @@ func TestFromMilligram(t *testing.T) {
 	}
 }
 
-func TestFromGram(t *testing.T) {
-	mass := Mass{}.FromGram(1000.0)
+func TestGram(t *testing.T) {
+	mass := Gram(1000.0)
 	stringValue := fmt.Sprint(mass)
 
 	if stringValue != expectedMassResponse {
@@ -28,8 +28,8 @@ func TestFromGram(t *testing.T) {
 	}
 }
 
-func TestFromKilograms(t *testing.T) {
-	mass := Mass{}.FromKilograms(1.0)
+func TestKilogram(t *testing.T) {
+	mass := Kilogram(1.0)
 	stringValue := fmt.Sprint(mass)
 
 	if stringValue != expectedMassResponse {
@@ -37,8 +37,8 @@ func TestFromKilograms(t *testing.T) {
 	}
 }
 
-func TestFromPounds(t *testing.T) {
-	mass := Mass{}.FromPounds(1.0)
+func TestPound(t *testing.T) {
+	mass := Pound(1.0)
 	stringValue := fmt.Sprint(mass)
 
 	if stringValue != expectedImperialMassResponse {
@@ -46,8 +46,8 @@ func TestFromPounds(t *testing.T) {
 	}
 }
 
-func TestFromOunces(t *testing.T) {
-	mass := Mass{}.FromOunces(16.0)
+func TestOunce(t *testing.T) {
+	mass := Ounce(16.0)
 	stringValue := fmt.Sprint(mass)
 
 	if stringValue != expectedImperialMassResponse {

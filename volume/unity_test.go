@@ -1,4 +1,4 @@
-package units
+package volume
 
 import (
 	"fmt"
@@ -9,8 +9,8 @@ const (
 	expectedVolumeResponse = "{{1000 ml} {1 l} {0.26417205235815 gal}}"
 )
 
-func TestVolume_FromMilliliter(t *testing.T) {
-	volume := Volume{}.FromMilliliter(1000.0)
+func Test_Milliliter(t *testing.T) {
+	volume := Milliliter(1000.0)
 	stringValue := fmt.Sprint(volume)
 
 	if stringValue != expectedVolumeResponse {
@@ -18,8 +18,8 @@ func TestVolume_FromMilliliter(t *testing.T) {
 	}
 }
 
-func TestVolume_FromLiter(t *testing.T) {
-	volume := Volume{}.FromLiter(1.0)
+func Test_Liter(t *testing.T) {
+	volume := Liter(1.0)
 	stringValue := fmt.Sprint(volume)
 
 	if stringValue != expectedVolumeResponse {
@@ -27,8 +27,8 @@ func TestVolume_FromLiter(t *testing.T) {
 	}
 }
 
-func TestVolume_FromGallon(t *testing.T) {
-	volume := Volume{}.FromGallon(0.26417205235815)
+func Test_Gallon(t *testing.T) {
+	volume := Gallon(0.26417205235815)
 	stringValue := fmt.Sprint(volume)
 
 	if stringValue != expectedVolumeResponse {
