@@ -1,4 +1,4 @@
-package converters
+package converter
 
 const (
 	milligramsInGrams = 1000

@@ -1,4 +1,4 @@
-package converters
+package converter
 
 const (
 	millilitersInLiters = 1000

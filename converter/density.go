@@ -1,4 +1,4 @@
-package converters
+package converter
 
 type FromDensity struct {
 	input float64

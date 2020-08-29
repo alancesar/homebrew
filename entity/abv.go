@@ -1,4 +1,4 @@
-package entities
+package entity
 
 type Abv struct {
 	Abv         float64
