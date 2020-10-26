@@ -1,5 +1,0 @@
-package color
-
-func Calculator() {
-
-}
