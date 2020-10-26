@@ -1,24 +1,16 @@
 package color
 
-import "github.com/alancesar/homebrew/units"
-
-const (
-	srmSymbol      = "srm"
-	ebcSymbol      = "ebc"
-	lovibondSymbol = "ºl"
-)
-
 type Color struct {
-	Srm      units.Unity
-	Ebc      units.Unity
-	Lovibond units.Unity
+	Srm      float64
+	Ebc      float64
+	Lovibond float64
 }
 
 func create(from *from) Color {
 	return Color{
-		Srm:      units.New(from.ToSrm(), srmSymbol),
-		Ebc:      units.New(from.ToEbc(), ebcSymbol),
-		Lovibond: units.New(from.ToLovibond(), lovibondSymbol),
+		Srm:      from.ToSrm(),
+		Ebc:      from.ToEbc(),
+		Lovibond: from.ToLovibond(),
 	}
 }
 

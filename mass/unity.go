@@ -1,32 +1,20 @@
 package mass
 
-import (
-	"github.com/alancesar/homebrew/units"
-)
-
-const (
-	milligram = "mg"
-	gram      = "g"
-	kilogram  = "kg"
-	pound     = "lb"
-	ounce     = "oz"
-)
-
 type Mass struct {
-	Milligrams units.Unity
-	Grams      units.Unity
-	Kilograms  units.Unity
-	Pounds     units.Unity
-	Ounces     units.Unity
+	Milligrams float64
+	Grams      float64
+	Kilograms  float64
+	Pounds     float64
+	Ounces     float64
 }
 
 func create(from *from) Mass {
 	return Mass{
-		Milligrams: units.New(from.ToMilligram(), milligram),
-		Grams:      units.New(from.ToGram(), gram),
-		Kilograms:  units.New(from.ToKilogram(), kilogram),
-		Pounds:     units.New(from.ToPounds(), pound),
-		Ounces:     units.New(from.ToOunces(), ounce),
+		Milligrams: from.ToMilligram(),
+		Grams:      from.ToGram(),
+		Kilograms:  from.ToKilogram(),
+		Pounds:     from.ToPounds(),
+		Ounces:     from.ToOunces(),
 	}
 }
 
