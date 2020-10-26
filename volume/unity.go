@@ -1,26 +1,16 @@
 package volume
 
-import (
-	"github.com/alancesar/homebrew/units"
-)
-
-const (
-	milliliterSymbol = "ml"
-	literSymbol      = "l"
-	gallonSymbol     = "gal"
-)
-
 type Volume struct {
-	Milliliters units.Unity
-	Liters      units.Unity
-	Gallons     units.Unity
+	Milliliters float64
+	Liters      float64
+	Gallons     float64
 }
 
 func create(from *from) Volume {
 	return Volume{
-		Milliliters: units.New(from.ToMilliliter(), milliliterSymbol),
-		Liters:      units.New(from.ToLiter(), literSymbol),
-		Gallons:     units.New(from.ToGallon(), gallonSymbol),
+		Milliliters: from.ToMilliliter(),
+		Liters:      from.ToLiter(),
+		Gallons:     from.ToGallon(),
 	}
 }
 
