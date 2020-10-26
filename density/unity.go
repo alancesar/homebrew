@@ -1,21 +1,14 @@
 package density
 
-import "github.com/alancesar/homebrew/units"
-
-const (
-	sgSymbol   = "sg"
-	brixSymbol = "ºbx"
-)
-
 type Density struct {
-	Sg   units.Unity
-	Brix units.Unity
+	Sg   float64
+	Brix float64
 }
 
 func create(from *from) Density {
 	return Density{
-		Sg:   units.New(from.ToSg(), sgSymbol),
-		Brix: units.New(from.ToBrix(), brixSymbol),
+		Sg:   from.ToSg(),
+		Brix: from.ToBrix(),
 	}
 }
 
