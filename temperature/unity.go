@@ -5,17 +5,16 @@ type Temperature struct {
 	Fahrenheit float64
 }
 
-func create(from *from) Temperature {
+func NewFromCelsius(value float64) Temperature {
 	return Temperature{
-		Celsius:    from.ToCelsius(),
-		Fahrenheit: from.ToFahrenheit(),
+		Celsius:    value,
+		Fahrenheit: (value * 1.8) + 32,
 	}
 }
 
-func Celsius(value float64) Temperature {
-	return create(FromCelsius(value))
-}
-
-func Fahrenheit(value float64) Temperature {
-	return create(FromFahrenheit(value))
+func NewFromFahrenheit(value float64) Temperature {
+	return Temperature{
+		Celsius:    (value - 32) / 1.8,
+		Fahrenheit: value,
+	}
 }
