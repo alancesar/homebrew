@@ -17,7 +17,7 @@ func TestCalculate(t *testing.T) {
 		want Abv
 	}{
 		{
-			name: "Should parse properly",
+			name: "Should calculate properly",
 			args: args{
 				og: density.NewFromSg(1.042),
 				fg: density.NewFromSg(1.008),
