@@ -24,7 +24,7 @@ type Grain struct {
 	Quantity mass.Mass
 	Color    color.Color
 	Ppg      float64
-	Mashable bool
+	Mashing  bool
 }
 
 type Hop struct {
@@ -61,17 +61,17 @@ func (r *Recipe) Ibu() float64 {
 }
 
 func (r *Recipe) ExpectedGravity() (preBoilOg, og, fg density.Density, abv alcohol.Abv) {
-	var mashablePoints, notMashablePoints float64
+	var mashingPoints, notMashingPoints float64
 
 	for _, input := range r.Grains {
-		if input.Mashable {
-			mashablePoints += input.Ppg * input.Quantity.Pounds
+		if input.Mashing {
+			mashingPoints += input.Ppg * input.Quantity.Pounds
 		} else {
-			notMashablePoints += input.Ppg * input.Quantity.Pounds
+			notMashingPoints += input.Ppg * input.Quantity.Pounds
 		}
 	}
 
-	points := (mashablePoints * r.Efficiency) + notMashablePoints
+	points := (mashingPoints * r.Efficiency) + notMashingPoints
 	preBoilOg = density.Sg(((points / r.WortCollected.Gallons) * 0.001) + 1)
 	og = density.Sg(((points / r.BatchSize.Gallons) * 0.001) + 1)
 	fg = density.Sg(((og.Sg - 1) * (1 - r.Attenuation)) + 1)
