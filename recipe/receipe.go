@@ -72,9 +72,9 @@ func (r *Recipe) ExpectedGravity() (preBoilOg, og, fg density.Density, abv alcoh
 	}
 
 	points := (mashingPoints * r.Efficiency) + notMashingPoints
-	preBoilOg = density.Sg(((points / r.WortCollected.Gallons) * 0.001) + 1)
-	og = density.Sg(((points / r.BatchSize.Gallons) * 0.001) + 1)
-	fg = density.Sg(((og.Sg - 1) * (1 - r.Attenuation)) + 1)
+	preBoilOg = density.NewFromSg(((points / r.WortCollected.Gallons) * 0.001) + 1)
+	og = density.NewFromSg(((points / r.BatchSize.Gallons) * 0.001) + 1)
+	fg = density.NewFromSg(((og.Sg - 1) * (1 - r.Attenuation)) + 1)
 	abv = alcohol.Calculate(og, fg)
 	return
 }

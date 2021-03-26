@@ -8,5 +8,5 @@ func RefractometerCorrection(og, fg Density) Density {
 		(0.0012717 * math.Pow(fg.Brix, 2)) - (0.0000072800 * math.Pow(og.Brix, 3))) +
 		(0.000063293 * math.Pow(fg.Brix, 3))
 
-	return Sg(correction)
+	return NewFromSg(correction)
 }
