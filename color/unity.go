@@ -17,24 +17,24 @@ func lovibondInSrm(srm float64) float64 {
 }
 
 type Color struct {
-	Srm      float64
-	Ebc      float64
+	SRM      float64
+	EBC      float64
 	Lovibond float64
 }
 
-func NewFromSrm(value float64) Color {
+func NewFromSRM(value float64) Color {
 	return Color{
-		Srm:      value,
-		Ebc:      value * srmInEbc,
+		SRM:      value,
+		EBC:      value * srmInEbc,
 		Lovibond: lovibondInSrm(value),
 	}
 }
 
-func NewFromEbc(value float64) Color {
+func NewFromEBC(value float64) Color {
 	srm := value * ebcInSrm
 	return Color{
-		Srm:      srm,
-		Ebc:      value,
+		SRM:      srm,
+		EBC:      value,
 		Lovibond: lovibondInSrm(srm),
 	}
 }
@@ -42,8 +42,8 @@ func NewFromEbc(value float64) Color {
 func FromLovibond(value float64) Color {
 	srm := srmInLovibond(value)
 	return Color{
-		Srm:      srm,
-		Ebc:      srm * srmInEbc,
+		SRM:      srm,
+		EBC:      srm * srmInEbc,
 		Lovibond: value,
 	}
 }

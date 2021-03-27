@@ -39,7 +39,7 @@ func (r *Recipe) Color() color.Color {
 		mcu += input.Quantity.Pounds * input.Color.Lovibond / r.BatchSize.Gallons
 	}
 	srm := 1.4922 * math.Pow(mcu, 0.6859)
-	return color.NewFromSrm(srm)
+	return color.NewFromSRM(srm)
 }
 
 func (r *Recipe) Abv() alcohol.Abv {
