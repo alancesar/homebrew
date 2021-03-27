@@ -15,7 +15,7 @@ func TestNewFromCelsius(t *testing.T) {
 		want Temperature
 	}{
 		{
-			name: "Should parse properly",
+			name: "Should parse from Celsius",
 			args: args{
 				value: 50,
 			},
@@ -44,7 +44,7 @@ func TestNewFromFahrenheit(t *testing.T) {
 		want Temperature
 	}{
 		{
-			name: "Should parse properly",
+			name: "Should parse from Fahrenheit",
 			args: args{
 				value: 68,
 			},

@@ -15,7 +15,7 @@ func TestNewFromMilligram(t *testing.T) {
 		want Mass
 	}{
 		{
-			name: "Should parse properly from milligram",
+			name: "Should parse from milligrams",
 			args: args{
 				value: 1000000.0,
 			},
@@ -28,7 +28,7 @@ func TestNewFromMilligram(t *testing.T) {
 			},
 		},
 		{
-			name: "Should parse properly from pound",
+			name: "Should parse from milligrams in one pound equivalent",
 			args: args{
 				value: 453592,
 			},
@@ -60,7 +60,7 @@ func TestNewFromGram(t *testing.T) {
 		want Mass
 	}{
 		{
-			name: "Should parse properly from gram",
+			name: "Should parse from grams",
 			args: args{
 				value: 1000.0,
 			},
@@ -73,7 +73,7 @@ func TestNewFromGram(t *testing.T) {
 			},
 		},
 		{
-			name: "Should parse properly from pound",
+			name: "Should parse from grams in one pound equivalent",
 			args: args{
 				value: 453.592,
 			},
@@ -105,7 +105,7 @@ func TestNewFromKilogram(t *testing.T) {
 		want Mass
 	}{
 		{
-			name: "Should parse properly from kilogram",
+			name: "Should parse from kilograms",
 			args: args{
 				value: 1.0,
 			},
@@ -118,7 +118,7 @@ func TestNewFromKilogram(t *testing.T) {
 			},
 		},
 		{
-			name: "Should parse properly from pound",
+			name: "Should parse from kilograms in one pound equivalent",
 			args: args{
 				value: 0.453592,
 			},
@@ -150,7 +150,7 @@ func TestNewFromPound(t *testing.T) {
 		want Mass
 	}{
 		{
-			name: "Should parse properly from pound",
+			name: "Should parse from pounds",
 			args: args{
 				value: 1.0,
 			},
@@ -163,7 +163,7 @@ func TestNewFromPound(t *testing.T) {
 			},
 		},
 		{
-			name: "Should parse properly from gram",
+			name: "Should parse from pounds in one kilogram",
 			args: args{
 				value: 2.20462262185,
 			},
@@ -195,7 +195,7 @@ func TestNewFromOunce(t *testing.T) {
 		want Mass
 	}{
 		{
-			name: "Should parse properly from once",
+			name: "Should parse from onces",
 			args: args{
 				value: 1.0,
 			},
@@ -208,7 +208,7 @@ func TestNewFromOunce(t *testing.T) {
 			},
 		},
 		{
-			name: "Should parse properly from gram",
+			name: "Should parse from ounces in one kilogram",
 			args: args{
 				value: 35.27396195,
 			},

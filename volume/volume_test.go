@@ -15,7 +15,7 @@ func TestNewFromMilliliter(t *testing.T) {
 		want Volume
 	}{
 		{
-			name: "Should create from milliliter properly",
+			name: "Should parse from milliliters",
 			args: args{
 				value: 1000.0,
 			},
@@ -23,6 +23,17 @@ func TestNewFromMilliliter(t *testing.T) {
 				Milliliters: 1000.0,
 				Liters:      1,
 				Gallons:     0.26417205235815002,
+			},
+		},
+		{
+			name: "Should parse from milliliters in one gallon equivalent",
+			args: args{
+				value: 3785.41,
+			},
+			want: Volume{
+				Milliliters: 3785.41,
+				Liters:      3.7854099999999997,
+				Gallons:     0.9999995287170645,
 			},
 		},
 	}
@@ -45,7 +56,7 @@ func TestNewFromLiter(t *testing.T) {
 		want Volume
 	}{
 		{
-			name: "Should create from liter properly",
+			name: "Should parse from liters",
 			args: args{
 				value: 10,
 			},
@@ -53,6 +64,17 @@ func TestNewFromLiter(t *testing.T) {
 				Milliliters: 10000.0,
 				Liters:      10,
 				Gallons:     2.6417205235815002,
+			},
+		},
+		{
+			name: "Should parse from liters in one gallon equivalent",
+			args: args{
+				value: 3.78541,
+			},
+			want: Volume{
+				Milliliters: 3785.4100000000003,
+				Liters:      3.78541,
+				Gallons:     0.9999995287170647,
 			},
 		},
 	}
@@ -75,18 +97,7 @@ func TestNewFromGallon(t *testing.T) {
 		want Volume
 	}{
 		{
-			name: "Should create one liter from gallon properly",
-			args: args{
-				value: 0.26417205235815,
-			},
-			want: Volume{
-				Milliliters: 1000.0,
-				Liters:      1,
-				Gallons:     0.26417205235815,
-			},
-		},
-		{
-			name: "Should create from gallon properly",
+			name: "Should parse from gallons",
 			args: args{
 				value: 1,
 			},
@@ -94,6 +105,17 @@ func TestNewFromGallon(t *testing.T) {
 				Milliliters: 3785.411783999977,
 				Liters:      3.7854117839999772,
 				Gallons:     1,
+			},
+		},
+		{
+			name: "Should parse from gallons in one liter equivalent",
+			args: args{
+				value: 0.26417205235815,
+			},
+			want: Volume{
+				Milliliters: 1000.0,
+				Liters:      1,
+				Gallons:     0.26417205235815,
 			},
 		},
 	}

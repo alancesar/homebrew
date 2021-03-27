@@ -10,5 +10,5 @@ func RefractometerCorrection(og, fg Density, wortCorrection float64) Density {
 		0.000275806*math.Pow(correctedOgBrix, 2) - 0.00127169*math.Pow(correctedFgBrix, 2) -
 		0.00000727999*math.Pow(correctedOgBrix, 3) + 0.0000632929*math.Pow(correctedFgBrix, 3)
 
-	return NewFromSg(correction)
+	return NewFromSG(correction)
 }

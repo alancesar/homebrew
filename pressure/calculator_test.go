@@ -16,7 +16,7 @@ func TestCalculateVolumesOfCarbonation(t *testing.T) {
 		want float64
 	}{
 		{
-			name: "Should correct pressure value properly - new",
+			name: "Should calculate volumes of carbonation",
 			args: args{
 				pressure:    NewFromPSI(14.0),
 				temperature: temperature.NewFromCelsius(5),

@@ -15,20 +15,20 @@ func TestNewFromSg(t *testing.T) {
 		want Density
 	}{
 		{
-			name: "Should parse properly",
+			name: "Should parse from SG to Brix",
 			args: args{
 				value: 1.092,
 			},
 			want: Density{
-				Sg:   1.092,
+				SG:   1.092,
 				Brix: 22.014119055148626,
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewFromSg(tt.args.value); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewFromSg() = %v, want %v", got, tt.want)
+			if got := NewFromSG(tt.args.value); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewFromSG() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -44,12 +44,12 @@ func TestNewFromBrix(t *testing.T) {
 		want Density
 	}{
 		{
-			name: "Should parse properly",
+			name: "Should parse from Brix to SG",
 			args: args{
 				value: 22,
 			},
 			want: Density{
-				Sg:   1.0919540676449373,
+				SG:   1.0919540676449373,
 				Brix: 22.0,
 			},
 		},

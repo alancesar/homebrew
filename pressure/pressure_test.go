@@ -15,7 +15,7 @@ func TestNewFromPSI(t *testing.T) {
 		want Pressure
 	}{
 		{
-			name: "Should create from PSI properly",
+			name: "Should parse from PSI",
 			args: args{
 				value: 1,
 			},
@@ -45,7 +45,7 @@ func TestNewFromKgfcm2(t *testing.T) {
 		want Pressure
 	}{
 		{
-			name: "Should create from Kgf/cm² properly",
+			name: "Should parse from Kgf/cm²",
 			args: args{
 				value: 1,
 			},
@@ -75,7 +75,7 @@ func TestNewFromBar(t *testing.T) {
 		want Pressure
 	}{
 		{
-			name: "Should create from PSI properly",
+			name: "Should parse from Bar",
 			args: args{
 				value: 1,
 			},

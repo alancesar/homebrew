@@ -47,7 +47,7 @@ func (r *Recipe) Abv() alcohol.Abv {
 }
 
 func (r *Recipe) Ibu() float64 {
-	boilGravity := (r.BatchSize.Gallons / r.WortCollected.Gallons) * (r.Og.Sg - 1)
+	boilGravity := (r.BatchSize.Gallons / r.WortCollected.Gallons) * (r.Og.SG - 1)
 	var ibu float64
 
 	for _, input := range r.Hops {
@@ -72,9 +72,9 @@ func (r *Recipe) ExpectedGravity() (preBoilOg, og, fg density.Density, abv alcoh
 	}
 
 	points := (mashingPoints * r.Efficiency) + notMashingPoints
-	preBoilOg = density.NewFromSg(((points / r.WortCollected.Gallons) * 0.001) + 1)
-	og = density.NewFromSg(((points / r.BatchSize.Gallons) * 0.001) + 1)
-	fg = density.NewFromSg(((og.Sg - 1) * (1 - r.Attenuation)) + 1)
+	preBoilOg = density.NewFromSG(((points / r.WortCollected.Gallons) * 0.001) + 1)
+	og = density.NewFromSG(((points / r.BatchSize.Gallons) * 0.001) + 1)
+	fg = density.NewFromSG(((og.SG - 1) * (1 - r.Attenuation)) + 1)
 	abv = alcohol.Calculate(og, fg)
 	return
 }

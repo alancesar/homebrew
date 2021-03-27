@@ -17,10 +17,10 @@ func TestCalculate(t *testing.T) {
 		want Abv
 	}{
 		{
-			name: "Should calculate properly",
+			name: "Should calculate ABV",
 			args: args{
-				og: density.NewFromSg(1.042),
-				fg: density.NewFromSg(1.008),
+				og: density.NewFromSG(1.042),
+				fg: density.NewFromSG(1.008),
 			},
 			want: Abv{
 				Abv:         0.04480076975680501,

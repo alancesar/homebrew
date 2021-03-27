@@ -17,22 +17,22 @@ func TestRefractometerCorrection(t *testing.T) {
 		want Density
 	}{
 		{
-			name: "Should calculate properly",
+			name: "Should calculate refractometer correction",
 			args: args{
-				og:             NewFromSg(1.053),
+				og:             NewFromSG(1.053),
 				fg:             NewFromBrix(8),
 				wortCorrection: 1,
 			},
-			want: NewFromSg(1.0172375951712538),
+			want: NewFromSG(1.0172375951712538),
 		},
 		{
-			name: "Should calculate properly using brix",
+			name: "Should calculate refractometer correction using Brix",
 			args: args{
 				og:             NewFromBrix(12),
 				fg:             NewFromBrix(8),
 				wortCorrection: 1.04,
 			},
-			want: NewFromSg(1.019038422451077),
+			want: NewFromSG(1.019038422451077),
 		},
 	}
 	for _, tt := range tests {
