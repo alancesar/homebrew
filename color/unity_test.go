@@ -94,3 +94,35 @@ func TestFromLovibond(t *testing.T) {
 		})
 	}
 }
+
+func TestColor_RGB(t *testing.T) {
+	tests := []struct {
+		name  string
+		color Color
+		want  string
+	}{
+		{
+			name:  "Should convert SRM value to RGB",
+			color: NewFromSRM(24),
+			want:  "#821E00",
+		},
+		{
+			name:  "Should convert SRM value to RGB with value < 1",
+			color: NewFromSRM(0),
+			want:  "#FFE699",
+		},
+		{
+			name:  "Should convert SRM value to RGB with value > 40",
+			color: NewFromSRM(41),
+			want:  "#36080A",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := tt.color
+			if got := c.RGB(); got != tt.want {
+				t.Errorf("RGB() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
