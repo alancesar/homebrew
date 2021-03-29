@@ -1,8 +1,35 @@
 package temperature
 
-type Temperature struct {
-	Celsius    float64
-	Fahrenheit float64
+import "github.com/alancesar/homebrew/measure"
+
+type (
+	Temperature struct {
+		Celsius    float64
+		Fahrenheit float64
+	}
+
+	temperatureConstructor func(value float64) Temperature
+)
+
+var constructorsMap = map[string]temperatureConstructor{
+	"c":  NewFromCelsius,
+	"ºc": NewFromCelsius,
+	"f":  NewFromFahrenheit,
+	"ºf": NewFromFahrenheit,
+}
+
+func NewFrom(input string) Temperature {
+	symbol, value, err := measure.ExtractSymbolAndValue(input)
+	if err != nil {
+		return Temperature{}
+	}
+
+	constructor, exists := constructorsMap[symbol]
+	if !exists {
+		return Temperature{}
+	}
+
+	return constructor(value)
 }
 
 func NewFromCelsius(value float64) Temperature {

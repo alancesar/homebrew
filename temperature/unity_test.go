@@ -62,3 +62,50 @@ func TestNewFromFahrenheit(t *testing.T) {
 		})
 	}
 }
+
+func TestNewFrom(t *testing.T) {
+	type args struct {
+		input string
+	}
+	tests := []struct {
+		name string
+		args args
+		want Temperature
+	}{
+		{
+			name: "Should parse from '1C' string",
+			args: args{
+				input: "1C",
+			},
+			want: NewFromCelsius(1),
+		},
+		{
+			name: "Should parse from '1ºC' string",
+			args: args{
+				input: "1ºC",
+			},
+			want: NewFromCelsius(1),
+		},
+		{
+			name: "Should parse from '1F' string",
+			args: args{
+				input: "1F",
+			},
+			want: NewFromFahrenheit(1),
+		},
+		{
+			name: "Should parse from '1ºF' string",
+			args: args{
+				input: "1ºF",
+			},
+			want: NewFromFahrenheit(1),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewFrom(tt.args.input); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewFrom() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
