@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var regex = regexp.MustCompile(`(\d{1,5}\.?\d*)(\s?)(\D{1,2})`)
+var regex = regexp.MustCompile(`(\d{1,5}\.?\d*)(\s?)(\D{1,3})`)
 
 const (
 	valueIndex  = 1
