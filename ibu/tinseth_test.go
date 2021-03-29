@@ -8,12 +8,11 @@ import (
 	"testing"
 )
 
-func TestCalculateGaretz(t *testing.T) {
+func TestTinseth_Calculate(t1 *testing.T) {
 	type args struct {
-		hops          []hop.Hop
-		wortGravity   density.Density
-		wortCollected volume.Volume
-		batchSize     volume.Volume
+		hops        []hop.Hop
+		wortGravity density.Density
+		batchSize   volume.Volume
 	}
 	tests := []struct {
 		name    string
@@ -21,7 +20,7 @@ func TestCalculateGaretz(t *testing.T) {
 		wantIbu float64
 	}{
 		{
-			name: "Should calculate IBU using Garetz's formula",
+			name: "Should calculate IBU using Tinseth's formula",
 			args: args{
 				hops: []hop.Hop{
 					{
@@ -37,18 +36,17 @@ func TestCalculateGaretz(t *testing.T) {
 						Pellet:     false,
 					},
 				},
-				wortGravity:   density.NewFromSG(1.050),
-				wortCollected: volume.NewFromGallon(6.5),
-				batchSize:     volume.NewFromGallon(5),
+				wortGravity: density.NewFromSG(1.050),
+				batchSize:   volume.NewFromGallon(5),
 			},
-			wantIbu: 26.360484634085594,
+			wantIbu: 39.0188834297751,
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			gotIbu := CalculateGaretz(tt.args.hops, tt.args.wortGravity, tt.args.wortCollected, tt.args.batchSize)
-			if gotIbu != tt.wantIbu {
-				t.Errorf("CalculateGaretz() = %v, wantIbu %v", gotIbu, tt.wantIbu)
+		t1.Run(tt.name, func(t1 *testing.T) {
+			t := &Tinseth{}
+			if gotIbu := t.Calculate(tt.args.hops, tt.args.wortGravity, tt.args.batchSize); gotIbu != tt.wantIbu {
+				t1.Errorf("Calculate() = %v, want %v", gotIbu, tt.wantIbu)
 			}
 		})
 	}

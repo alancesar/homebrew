@@ -15,11 +15,15 @@ const (
 	defaultAttenuation = 0.72
 )
 
+type IBUCalculator interface {
+	Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) float64
+}
+
 var (
-	ibuCalculators = map[string]ibu.Calculator{
-		"Tinseth": ibu.CalculateTinseth,
-		"Rager":   ibu.CalculateRager,
-		"Daniel":  ibu.CalculateDaniel,
+	ibuCalculators = map[string]IBUCalculator{
+		"Tinseth": ibu.NewTinsethCalculator(),
+		"Rager":   ibu.NewRagerCalculator(),
+		"Daniel":  ibu.NewDanielCalculator(),
 	}
 )
 
@@ -115,7 +119,7 @@ func (r *Recipe) IBU() map[string]float64 {
 	if r.og != nil && r.batchSize != nil && r.wortCollected != nil {
 		wortGravity := density.NewFromSG(((r.batchSize.Gallons / r.wortCollected.Gallons) * (r.og.SG - 1)) + 1)
 		for name, calculator := range ibuCalculators {
-			ibuValues[name] = calculator(r.hops, wortGravity, *r.batchSize)
+			ibuValues[name] = calculator.Calculate(r.hops, wortGravity, *r.batchSize)
 		}
 	}
 
