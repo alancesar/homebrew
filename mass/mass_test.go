@@ -229,3 +229,48 @@ func TestNewFromOunce(t *testing.T) {
 		})
 	}
 }
+
+func TestNewFrom(t *testing.T) {
+	type args struct {
+		input string
+	}
+	tests := []struct {
+		name string
+		args args
+		want Mass
+	}{
+		{
+			name: "Should parse from '1kg' string",
+			args: args{
+				input: "1kg",
+			},
+			want: Mass{
+				Milligrams: 1000000.0,
+				Grams:      1000.0,
+				Kilograms:  1.0,
+				Pounds:     2.2046244201837775,
+				Ounces:     35.27399072294044,
+			},
+		},
+		{
+			name: "Should parse from '1lb' string",
+			args: args{
+				input: "1lb",
+			},
+			want: Mass{
+				Milligrams: 453592.0,
+				Grams:      453.592,
+				Kilograms:  0.453592,
+				Pounds:     1,
+				Ounces:     16,
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewFrom(tt.args.input); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewFrom() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

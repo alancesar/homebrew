@@ -1,5 +1,7 @@
 package mass
 
+import "github.com/alancesar/homebrew/measure"
+
 const (
 	milligramsInGrams = 1000
 	kilogramsInGrams  = 0.001
@@ -14,6 +16,30 @@ type Mass struct {
 	Kilograms  float64
 	Pounds     float64
 	Ounces     float64
+}
+
+type massConstructor func(value float64) Mass
+
+var mapConstructor = map[string]massConstructor{
+	"mg": NewFromMilligram,
+	"g":  NewFromGram,
+	"kg": NewFromKilogram,
+	"lb": NewFromPound,
+	"oz": NewFromOunce,
+}
+
+func NewFrom(input string) Mass {
+	symbol, value, err := measure.ExtractSymbolAndValue(input)
+	if err != nil {
+		return Mass{}
+	}
+
+	constructor, exists := mapConstructor[symbol]
+	if !exists {
+		return Mass{}
+	}
+
+	return constructor(value)
 }
 
 func NewFromMilligram(value float64) Mass {
