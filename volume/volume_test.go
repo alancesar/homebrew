@@ -127,3 +127,43 @@ func TestNewFromGallon(t *testing.T) {
 		})
 	}
 }
+
+func TestNewFrom(t *testing.T) {
+	type args struct {
+		input string
+	}
+	tests := []struct {
+		name string
+		args args
+		want Volume
+	}{
+		{
+			name: "Should parse from '1ml' string",
+			args: args{
+				input: "1ml",
+			},
+			want: NewFromMilliliter(1),
+		},
+		{
+			name: "Should parse from '1l' string",
+			args: args{
+				input: "1l",
+			},
+			want: NewFromLiter(1),
+		},
+		{
+			name: "Should parse from '1gal' string",
+			args: args{
+				input: "1gal",
+			},
+			want: NewFromGallon(1),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewFrom(tt.args.input); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewFrom() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
