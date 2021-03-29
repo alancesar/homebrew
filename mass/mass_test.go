@@ -240,30 +240,39 @@ func TestNewFrom(t *testing.T) {
 		want Mass
 	}{
 		{
+			name: "Should parse from '1mg' string",
+			args: args{
+				input: "1mg",
+			},
+			want: NewFromMilligram(1),
+		},
+		{
+			name: "Should parse from '1g' string",
+			args: args{
+				input: "1g",
+			},
+			want: NewFromGram(1),
+		},
+		{
 			name: "Should parse from '1kg' string",
 			args: args{
 				input: "1kg",
 			},
-			want: Mass{
-				Milligrams: 1000000.0,
-				Grams:      1000.0,
-				Kilograms:  1.0,
-				Pounds:     2.2046244201837775,
-				Ounces:     35.27399072294044,
-			},
+			want: NewFromKilogram(1),
 		},
 		{
 			name: "Should parse from '1lb' string",
 			args: args{
 				input: "1lb",
 			},
-			want: Mass{
-				Milligrams: 453592.0,
-				Grams:      453.592,
-				Kilograms:  0.453592,
-				Pounds:     1,
-				Ounces:     16,
+			want: NewFromPound(1),
+		},
+		{
+			name: "Should parse from '1oz' string",
+			args: args{
+				input: "1oz",
 			},
+			want: NewFromOunce(1),
 		},
 	}
 	for _, tt := range tests {

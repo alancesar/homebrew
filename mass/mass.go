@@ -10,17 +10,19 @@ const (
 	poundsInOunces    = 16
 )
 
-type Mass struct {
-	Milligrams float64
-	Grams      float64
-	Kilograms  float64
-	Pounds     float64
-	Ounces     float64
-}
+type (
+	Mass struct {
+		Milligrams float64
+		Grams      float64
+		Kilograms  float64
+		Pounds     float64
+		Ounces     float64
+	}
 
-type massConstructor func(value float64) Mass
+	massConstructor func(value float64) Mass
+)
 
-var mapConstructor = map[string]massConstructor{
+var constructorsMap = map[string]massConstructor{
 	"mg": NewFromMilligram,
 	"g":  NewFromGram,
 	"kg": NewFromKilogram,
@@ -34,7 +36,7 @@ func NewFrom(input string) Mass {
 		return Mass{}
 	}
 
-	constructor, exists := mapConstructor[symbol]
+	constructor, exists := constructorsMap[symbol]
 	if !exists {
 		return Mass{}
 	}
