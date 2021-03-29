@@ -105,7 +105,7 @@ func TestRecipe_IBU(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
-		want   float64
+		want   map[string]float64
 	}{
 		{
 			name: "Should calculate IBU",
@@ -145,13 +145,17 @@ func TestRecipe_IBU(t *testing.T) {
 						Pellet:     true,
 					},
 				),
-			want: 73.6137831537478,
+			want: map[string]float64{
+				"Tinseth": 73.6053858587605,
+				"Rager":   95.80235532474533,
+				"Daniel":  79.1463888888889,
+			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := tt.recipe
-			if got := r.IBU(); got != tt.want {
+			if got := r.IBU(); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("IBU() = %v, want %v", got, tt.want)
 			}
 		})

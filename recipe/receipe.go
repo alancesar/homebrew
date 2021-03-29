@@ -15,6 +15,14 @@ const (
 	defaultAttenuation = 0.72
 )
 
+var (
+	ibuCalculators = map[string]ibu.Calculator{
+		"Tinseth": ibu.CalculateTinseth,
+		"Rager":   ibu.CalculateRager,
+		"Daniel":  ibu.CalculateDaniel,
+	}
+)
+
 type Recipe struct {
 	name          string
 	efficiency    float64
@@ -101,13 +109,17 @@ func (r *Recipe) ABV() alcohol.Abv {
 	return alcohol.Abv{}
 }
 
-func (r *Recipe) IBU() float64 {
+func (r *Recipe) IBU() map[string]float64 {
+	ibuValues := map[string]float64{}
+
 	if r.og != nil && r.batchSize != nil && r.wortCollected != nil {
-		boilGravity := density.NewFromSG(((r.batchSize.Gallons / r.wortCollected.Gallons) * (r.og.SG - 1)) + 1)
-		return ibu.CalculateTinseth(r.hops, boilGravity, *r.batchSize)
+		wortGravity := density.NewFromSG(((r.batchSize.Gallons / r.wortCollected.Gallons) * (r.og.SG - 1)) + 1)
+		for name, calculator := range ibuCalculators {
+			ibuValues[name] = calculator(r.hops, wortGravity, *r.batchSize)
+		}
 	}
 
-	return 0
+	return ibuValues
 }
 
 func (r *Recipe) ExpectedPreBoilDensity() density.Density {
