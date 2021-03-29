@@ -4,6 +4,7 @@ import (
 	"github.com/alancesar/homebrew/abv"
 	"github.com/alancesar/homebrew/color"
 	"github.com/alancesar/homebrew/density"
+	"github.com/alancesar/homebrew/hop"
 	"github.com/alancesar/homebrew/mass"
 	"github.com/alancesar/homebrew/volume"
 	"reflect"
@@ -39,7 +40,7 @@ func TestRecipe_Color(t *testing.T) {
 	}{
 		{
 			name: "Should calculate color of the recipe",
-			recipe: NewRecipe("Test recipe").
+			recipe: NewRecipe("Test Recipe").
 				WithBatchSize(volume.NewFromLiter(40)).
 				WithGrains(
 					Grain{
@@ -73,21 +74,16 @@ func TestRecipe_Color(t *testing.T) {
 }
 
 func TestRecipe_ABV(t *testing.T) {
-	type fields struct {
-		Og density.Density
-		Fg density.Density
-	}
 	tests := []struct {
 		name   string
-		fields fields
+		recipe *Recipe
 		want   abv.Abv
 	}{
 		{
 			name: "Should calculate ABV value",
-			fields: fields{
-				Og: density.NewFromSG(1.042),
-				Fg: density.NewFromSG(1.008),
-			},
+			recipe: NewRecipe("Test Recipe").
+				WithOG(density.NewFromSG(1.042)).
+				WithFG(density.NewFromSG(1.008)),
 			want: abv.Abv{
 				Abv:         0.04480076975680501,
 				Abw:         0.03584061580544401,
@@ -97,10 +93,7 @@ func TestRecipe_ABV(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &Recipe{
-				OG: tt.fields.Og,
-				FG: tt.fields.Fg,
-			}
+			r := tt.recipe
 			if got := r.ABV(); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ABV() = %v, want %v", got, tt.want)
 			}
@@ -109,62 +102,55 @@ func TestRecipe_ABV(t *testing.T) {
 }
 
 func TestRecipe_IBU(t *testing.T) {
-	type fields struct {
-		Og            density.Density
-		BatchSize     volume.Volume
-		WortCollected volume.Volume
-		Hops          []Hop
-	}
 	tests := []struct {
 		name   string
-		fields fields
+		recipe *Recipe
 		want   float64
 	}{
 		{
 			name: "Should calculate IBU",
-			fields: fields{
-				Og:            density.NewFromSG(1.063),
-				BatchSize:     volume.NewFromLiter(36),
-				WortCollected: volume.NewFromLiter(42),
-				Hops: []Hop{
-					{
+			recipe: NewRecipe("Test Recipe").
+				WithBatchSize(volume.NewFromLiter(36)).
+				WithWortCollected(volume.NewFromLiter(42)).
+				WithOG(density.NewFromSG(1.063)).
+				WithHops(
+					hop.Hop{
 						Quantity:   mass.NewFromGram(54),
 						AlphaAcids: 0.157,
 						BoilTime:   60,
+						Pellet:     true,
 					},
-					{
+					hop.Hop{
 						Quantity:   mass.NewFromGram(44),
 						AlphaAcids: 0.078,
 						BoilTime:   5,
+						Pellet:     true,
 					},
-					{
+					hop.Hop{
 						Quantity:   mass.NewFromGram(42),
 						AlphaAcids: 0.122,
 						BoilTime:   5,
+						Pellet:     true,
 					},
-					{
+					hop.Hop{
 						Quantity:   mass.NewFromGram(20),
 						AlphaAcids: 0.161,
 						BoilTime:   5,
+						Pellet:     true,
 					},
-					{
+					hop.Hop{
 						Quantity:   mass.NewFromGram(43),
 						AlphaAcids: 0.105,
 						BoilTime:   0,
+						Pellet:     true,
 					},
-				},
-			},
-			want: 73.61378315374786,
+				),
+			want: 73.6137831537478,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &Recipe{
-				OG:            tt.fields.Og,
-				batchSize:     tt.fields.BatchSize,
-				wortCollected: tt.fields.WortCollected,
-				hops:          tt.fields.Hops,
-			}
+			r := tt.recipe
 			if got := r.IBU(); got != tt.want {
 				t.Errorf("IBU() = %v, want %v", got, tt.want)
 			}
