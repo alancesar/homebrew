@@ -14,7 +14,7 @@ type Pressure struct {
 func NewFromPSI(value float64) Pressure {
 	return Pressure{
 		PSI:    value,
-		Kgfcm2: value / 14.223,
+		Kgfcm2: value / psiInKgfcm2,
 		Bar:    value / barInKgfcm2 / psiInKgfcm2,
 	}
 }
