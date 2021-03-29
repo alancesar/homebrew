@@ -8,12 +8,17 @@ import (
 	"math"
 )
 
+const (
+	defaultEfficiency  = 0.75
+	defaultAttenuation = 0.72
+)
+
 type Recipe struct {
 	OG density.Density
 	FG density.Density
 
-	Efficiency  float64
-	Attenuation float64
+	efficiency  float64
+	attenuation float64
 
 	name          string
 	wortCollected volume.Volume
@@ -29,8 +34,20 @@ type Recipe struct {
 
 func NewRecipe(name string) *Recipe {
 	return &Recipe{
-		name: name,
+		name:        name,
+		efficiency:  defaultEfficiency,
+		attenuation: defaultAttenuation,
 	}
+}
+
+func (r *Recipe) WithEfficiency(efficiency float64) *Recipe {
+	r.efficiency = efficiency
+	return r
+}
+
+func (r *Recipe) WithAttenuation(attenuation float64) *Recipe {
+	r.attenuation = attenuation
+	return r
 }
 
 func (r *Recipe) WithWortCollected(wortCollected volume.Volume) *Recipe {
@@ -111,10 +128,10 @@ func (r *Recipe) calculateExpectedGravity() {
 		}
 	}
 
-	points := (mashingPoints * r.Efficiency) + notMashingPoints
+	points := (mashingPoints * r.efficiency) + notMashingPoints
 	r.expectedPreBoilDensity = density.NewFromSG(((points / r.wortCollected.Gallons) * 0.001) + 1)
 	r.expectedOG = density.NewFromSG(((points / r.batchSize.Gallons) * 0.001) + 1)
-	r.expectedFG = density.NewFromSG(((r.expectedOG.SG - 1) * (1 - r.Attenuation)) + 1)
+	r.expectedFG = density.NewFromSG(((r.expectedOG.SG - 1) * (1 - r.attenuation)) + 1)
 	r.expectedABV = alcohol.Calculate(r.expectedOG, r.expectedFG)
 	return
 }

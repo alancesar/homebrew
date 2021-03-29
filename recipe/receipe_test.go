@@ -11,12 +11,7 @@ import (
 )
 
 func buildRecipe() *Recipe {
-	r := &Recipe{
-		Efficiency:  0.75,
-		Attenuation: 0.72,
-	}
-
-	return r.WithBatchSize(volume.NewFromLiter(40)).
+	return NewRecipe("Test Recipe").WithBatchSize(volume.NewFromLiter(40)).
 		WithWortCollected(volume.NewFromLiter(64)).
 		WithGrains(
 			Grain{
