@@ -24,46 +24,71 @@ func TestCalculateTinseth(t *testing.T) {
 			args: args{
 				hops: []hop.Hop{
 					{
-						Quantity:   mass.NewFromGram(54),
-						AlphaAcids: 0.157,
-						BoilTime:   60,
-						Pellet:     true,
+						Quantity:   mass.NewFromOunce(1.5),
+						BoilTime:   45,
+						AlphaAcids: 0.064,
+						Pellet:     false,
 					},
 					{
-						Quantity:   mass.NewFromGram(44),
-						AlphaAcids: 0.078,
-						BoilTime:   5,
-						Pellet:     true,
-					},
-					{
-						Quantity:   mass.NewFromGram(42),
-						AlphaAcids: 0.122,
-						BoilTime:   5,
-						Pellet:     true,
-					},
-					{
-						Quantity:   mass.NewFromGram(20),
-						AlphaAcids: 0.161,
-						BoilTime:   5,
-						Pellet:     true,
-					},
-					{
-						Quantity:   mass.NewFromGram(43),
-						AlphaAcids: 0.105,
-						BoilTime:   0,
-						Pellet:     true,
+						Quantity:   mass.NewFromOunce(1),
+						BoilTime:   15,
+						AlphaAcids: 0.05,
+						Pellet:     false,
 					},
 				},
-				wortGravity: density.NewFromSG(1.054),
-				batchSize:   volume.NewFromLiter(36),
+				wortGravity: density.NewFromSG(1.050),
+				batchSize:   volume.NewFromGallon(5),
 			},
-			wantIbu: 73.6137831537478,
+			wantIbu: 39.02333491210092,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if gotIbu := CalculateTinseth(tt.args.hops, tt.args.wortGravity, tt.args.batchSize); gotIbu != tt.wantIbu {
 				t.Errorf("CalculateTinseth() = %v, want %v", gotIbu, tt.wantIbu)
+			}
+		})
+	}
+}
+
+func TestCalculateRoger(t *testing.T) {
+	type args struct {
+		hops        []hop.Hop
+		wortGravity density.Density
+		batchSize   volume.Volume
+	}
+	tests := []struct {
+		name string
+		args args
+		want float64
+	}{
+		{
+			name: "Should calculate IBU using Roger's formula",
+			args: args{
+				hops: []hop.Hop{
+					{
+						Quantity:   mass.NewFromOunce(1.5),
+						BoilTime:   45,
+						AlphaAcids: 0.064,
+						Pellet:     false,
+					},
+					{
+						Quantity:   mass.NewFromOunce(1),
+						BoilTime:   15,
+						AlphaAcids: 0.05,
+						Pellet:     false,
+					},
+				},
+				wortGravity: density.NewFromSG(1.050),
+				batchSize:   volume.NewFromGallon(5),
+			},
+			want: 44.683556171485115,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := CalculateRoger(tt.args.hops, tt.args.wortGravity, tt.args.batchSize); got != tt.want {
+				t.Errorf("CalculateRoger() = %v, want %v", got, tt.want)
 			}
 		})
 	}
