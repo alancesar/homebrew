@@ -195,7 +195,7 @@ func TestNewFromOunce(t *testing.T) {
 		want Mass
 	}{
 		{
-			name: "Should parse from onces",
+			name: "Should parse from ounces",
 			args: args{
 				value: 1.0,
 			},
