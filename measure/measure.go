@@ -16,7 +16,6 @@ const (
 
 type Measure interface {
 	IsZero() bool
-	IsNotZero() bool
 }
 
 func ExtractSymbolAndValue(input string) (string, float64, error) {
@@ -28,4 +27,14 @@ func ExtractSymbolAndValue(input string) (string, float64, error) {
 	symbol := strings.ToLower(elements[symbolIndex])
 	value, err := strconv.ParseFloat(elements[valueIndex], 64)
 	return symbol, value, err
+}
+
+func HasSomeZeroValue(measures ...Measure) bool {
+	for _, measure := range measures {
+		if measure.IsZero() {
+			return true
+		}
+	}
+
+	return false
 }

@@ -26,10 +26,6 @@ func (m Mass) IsZero() bool {
 	return m.Kilograms == 0 && m.Pounds == 0
 }
 
-func (m Mass) IsNotZero() bool {
-	return !m.IsZero()
-}
-
 var constructorsMap = map[string]massConstructor{
 	"mg": NewFromMilligram,
 	"g":  NewFromGram,
