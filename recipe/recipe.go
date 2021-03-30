@@ -7,6 +7,7 @@ import (
 	"github.com/alancesar/homebrew/density"
 	"github.com/alancesar/homebrew/fermentable"
 	"github.com/alancesar/homebrew/hop"
+	"github.com/alancesar/homebrew/measure"
 	"github.com/alancesar/homebrew/volume"
 	"math"
 )
@@ -32,10 +33,10 @@ type Recipe struct {
 	name          string
 	efficiency    float64
 	attenuation   float64
-	og            *density.Density
-	fg            *density.Density
-	wortCollected *volume.Volume
-	batchSize     *volume.Volume
+	og            density.Density
+	fg            density.Density
+	wortCollected volume.Volume
+	batchSize     volume.Volume
 	hops          []hop.Hop
 	fermentable   []fermentable.Fermentable
 
@@ -54,12 +55,12 @@ func NewRecipe(name string) *Recipe {
 }
 
 func (r *Recipe) WithOG(og density.Density) *Recipe {
-	r.og = &og
+	r.og = og
 	return r
 }
 
 func (r *Recipe) WithFG(fg density.Density) *Recipe {
-	r.fg = &fg
+	r.fg = fg
 	return r
 }
 
@@ -74,13 +75,13 @@ func (r *Recipe) WithAttenuation(attenuation float64) *Recipe {
 }
 
 func (r *Recipe) WithWortCollected(wortCollected volume.Volume) *Recipe {
-	r.wortCollected = &wortCollected
+	r.wortCollected = wortCollected
 	r.calculateExpectedGravity()
 	return r
 }
 
 func (r *Recipe) WithBatchSize(batchSize volume.Volume) *Recipe {
-	r.batchSize = &batchSize
+	r.batchSize = batchSize
 	r.calculateExpectedGravity()
 	return r
 }
@@ -107,21 +108,23 @@ func (r *Recipe) Color() color.Color {
 }
 
 func (r *Recipe) ABV() alcohol.Abv {
-	if r.og != nil && r.fg != nil {
-		return alcohol.Calculate(*r.og, *r.fg)
+	if measure.HasSomeZeroValue(r.og, r.fg) {
+		return alcohol.Abv{}
 	}
 
-	return alcohol.Abv{}
+	return alcohol.Calculate(r.og, r.fg)
 }
 
-func (r *Recipe) IBU() map[string]bitterness.Bitterness {
-	ibuValues := map[string]bitterness.Bitterness{}
+func (r *Recipe) ExpectedIBU() bitterness.Table {
+	ibuValues := bitterness.Table{}
 
-	if r.og != nil && r.batchSize != nil && r.wortCollected != nil {
-		wortGravity := density.NewFromSG(((r.batchSize.Gallons / r.wortCollected.Gallons) * (r.og.SG - 1)) + 1)
-		for name, calculator := range ibuCalculators {
-			ibuValues[name] = calculator.Calculate(r.hops, wortGravity, *r.batchSize)
-		}
+	if measure.HasSomeZeroValue(r.og, r.batchSize, r.wortCollected) {
+		return ibuValues
+	}
+
+	wortGravity := density.NewFromSG(((r.batchSize.Gallons / r.wortCollected.Gallons) * (r.og.SG - 1)) + 1)
+	for name, calculator := range ibuCalculators {
+		ibuValues[name] = calculator.Calculate(r.hops, wortGravity, r.batchSize)
 	}
 
 	return ibuValues
@@ -144,13 +147,20 @@ func (r *Recipe) ExpectedABV() alcohol.Abv {
 }
 
 func (r *Recipe) calculateExpectedGravity() {
-	if r.wortCollected == nil {
+	if measure.HasSomeZeroValue(r.wortCollected, r.batchSize) {
 		return
 	}
 
-	var mashingPoints, notMashingPoints float64
+	mashingPoints, notMashingPoints := calculatePPGPoints(r.fermentable)
+	points := (mashingPoints * r.efficiency) + notMashingPoints
+	r.expectedPreBoilDensity = density.NewFromSG(((points / r.wortCollected.Gallons) * 0.001) + 1)
+	r.expectedOG = density.NewFromSG(((points / r.batchSize.Gallons) * 0.001) + 1)
+	r.expectedFG = density.NewFromSG(((r.expectedOG.SG - 1) * (1 - r.attenuation)) + 1)
+	r.expectedABV = alcohol.Calculate(r.expectedOG, r.expectedFG)
+}
 
-	for _, input := range r.fermentable {
+func calculatePPGPoints(f []fermentable.Fermentable) (mashingPoints float64, notMashingPoints float64) {
+	for _, input := range f {
 		if input.Mashing {
 			mashingPoints += input.PPG * input.Quantity.Pounds
 		} else {
@@ -158,10 +168,5 @@ func (r *Recipe) calculateExpectedGravity() {
 		}
 	}
 
-	points := (mashingPoints * r.efficiency) + notMashingPoints
-	r.expectedPreBoilDensity = density.NewFromSG(((points / r.wortCollected.Gallons) * 0.001) + 1)
-	r.expectedOG = density.NewFromSG(((points / r.batchSize.Gallons) * 0.001) + 1)
-	r.expectedFG = density.NewFromSG(((r.expectedOG.SG - 1) * (1 - r.attenuation)) + 1)
-	r.expectedABV = alcohol.Calculate(r.expectedOG, r.expectedFG)
-	return
+	return mashingPoints, notMashingPoints
 }

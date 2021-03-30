@@ -103,14 +103,14 @@ func TestRecipe_ABV(t *testing.T) {
 	}
 }
 
-func TestRecipe_IBU(t *testing.T) {
+func TestRecipe_ExpectedIBU(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
 		want   bitterness.Table
 	}{
 		{
-			name: "Should calculate IBU",
+			name: "Should calculate expected IBU",
 			recipe: NewRecipe("Test Recipe").
 				WithBatchSize(volume.NewFromLiter(36)).
 				WithWortCollected(volume.NewFromLiter(42)).
@@ -147,7 +147,7 @@ func TestRecipe_IBU(t *testing.T) {
 						Pellet:     true,
 					},
 				),
-			want: map[string]bitterness.Bitterness{
+			want: bitterness.Table{
 				"Tinseth": bitterness.NewFromIBU(73.6053858587605),
 				"Rager":   bitterness.NewFromIBU(95.80235532474533),
 				"Daniel":  bitterness.NewFromIBU(79.1463888888889),
@@ -157,8 +157,8 @@ func TestRecipe_IBU(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := tt.recipe
-			if got := r.IBU(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("IBU() = %v, want %v", got, tt.want)
+			if got := r.ExpectedIBU(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ExpectedIBU() = %v, want %v", got, tt.want)
 			}
 		})
 	}
