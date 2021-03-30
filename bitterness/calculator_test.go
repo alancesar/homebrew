@@ -9,6 +9,33 @@ import (
 	"testing"
 )
 
+type bitternessTestArgs struct {
+	hops        []hop.Hop
+	wortGravity density.Density
+	batchSize   volume.Volume
+}
+
+func buildBasicTestArgs() bitternessTestArgs {
+	return bitternessTestArgs{
+		hops: []hop.Hop{
+			{
+				Quantity:   mass.NewFromOunce(1.5),
+				BoilTime:   45,
+				AlphaAcids: 0.064,
+				Pellet:     false,
+			},
+			{
+				Quantity:   mass.NewFromOunce(1),
+				BoilTime:   15,
+				AlphaAcids: 0.05,
+				Pellet:     false,
+			},
+		},
+		wortGravity: density.NewFromSG(1.050),
+		batchSize:   volume.NewFromGallon(5),
+	}
+}
+
 func TestCalculateGaretz(t *testing.T) {
 	type args struct {
 		hops          []hop.Hop
