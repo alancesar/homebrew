@@ -14,11 +14,11 @@ type Recipe struct {
 }
 
 type Hop struct {
-	Quantity   string `json:"quantity"`
-	BoilTime   int    `json:"boil_time"`
-	AlphaAcids int    `json:"alpha_acids"`
-	Pellet     bool   `json:"pellet"`
-	DryHopping bool   `json:"dry_hopping"`
+	Quantity   string  `json:"quantity"`
+	BoilTime   int     `json:"boil_time"`
+	AlphaAcids float64 `json:"alpha_acids"`
+	Pellet     bool    `json:"pellet"`
+	DryHopping bool    `json:"dry_hopping"`
 }
 
 type Fermentable struct {

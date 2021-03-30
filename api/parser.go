@@ -24,7 +24,7 @@ func parseHop(h Hop) hop.Hop {
 	return hop.Hop{
 		Quantity:   mass.NewFrom(h.Quantity),
 		BoilTime:   h.BoilTime,
-		AlphaAcids: float64(h.AlphaAcids) / 100,
+		AlphaAcids: h.AlphaAcids / 100,
 		Pellet:     h.Pellet,
 		DryHopping: h.DryHopping,
 	}
