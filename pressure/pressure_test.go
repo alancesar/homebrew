@@ -133,16 +133,9 @@ func TestNewFrom(t *testing.T) {
 			want: NewFromKgfcm2(1),
 		},
 		{
-			name: "Should parse from '1kgfcm2' string",
+			name: "Should parse from '1kgfcm' string",
 			args: args{
-				input: "1kgfcm2",
-			},
-			want: NewFromKgfcm2(1),
-		},
-		{
-			name: "Should parse from '1kgf/cm2' string",
-			args: args{
-				input: "1kgf/cm2",
+				input: "1kgfcm",
 			},
 			want: NewFromKgfcm2(1),
 		},
