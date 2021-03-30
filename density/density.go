@@ -5,11 +5,11 @@ type Density struct {
 	Brix float64
 }
 
-func (d *Density) IsZero() bool {
+func (d Density) IsZero() bool {
 	return d.SG == 0 && d.Brix == 0
 }
 
-func (d *Density) IsNotZero() bool {
+func (d Density) IsNotZero() bool {
 	return !d.IsZero()
 }
 
