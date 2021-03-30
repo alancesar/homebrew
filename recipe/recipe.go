@@ -5,6 +5,7 @@ import (
 	"github.com/alancesar/homebrew/bitterness"
 	"github.com/alancesar/homebrew/color"
 	"github.com/alancesar/homebrew/density"
+	"github.com/alancesar/homebrew/fermentable"
 	"github.com/alancesar/homebrew/hop"
 	"github.com/alancesar/homebrew/volume"
 	"math"
@@ -36,7 +37,7 @@ type Recipe struct {
 	wortCollected *volume.Volume
 	batchSize     *volume.Volume
 	hops          []hop.Hop
-	fermentable   []Fermentable
+	fermentable   []fermentable.Fermentable
 
 	expectedPreBoilDensity density.Density
 	expectedOG             density.Density
@@ -90,8 +91,8 @@ func (r *Recipe) WithHops(hops ...hop.Hop) *Recipe {
 	return r
 }
 
-func (r *Recipe) WithFermentable(fermentable ...Fermentable) *Recipe {
-	r.fermentable = fermentable
+func (r *Recipe) WithFermentable(f ...fermentable.Fermentable) *Recipe {
+	r.fermentable = f
 	r.calculateExpectedGravity()
 	return r
 }

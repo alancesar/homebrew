@@ -5,6 +5,7 @@ import (
 	"github.com/alancesar/homebrew/bitterness"
 	"github.com/alancesar/homebrew/color"
 	"github.com/alancesar/homebrew/density"
+	"github.com/alancesar/homebrew/fermentable"
 	"github.com/alancesar/homebrew/hop"
 	"github.com/alancesar/homebrew/mass"
 	"github.com/alancesar/homebrew/volume"
@@ -16,17 +17,17 @@ func buildRecipe() *Recipe {
 	return NewRecipe("Test Recipe").WithBatchSize(volume.NewFromLiter(40)).
 		WithWortCollected(volume.NewFromLiter(64)).
 		WithFermentable(
-			Fermentable{
+			fermentable.Fermentable{
 				PPG:      37,
 				Quantity: mass.NewFromKilogram(7),
 				Mashing:  true,
 			},
-			Fermentable{
+			fermentable.Fermentable{
 				PPG:      33,
 				Quantity: mass.NewFromGram(700),
 				Mashing:  true,
 			},
-			Fermentable{
+			fermentable.Fermentable{
 				PPG:      38,
 				Quantity: mass.NewFromKilogram(6),
 				Mashing:  true,
@@ -44,15 +45,15 @@ func TestRecipe_Color(t *testing.T) {
 			recipe: NewRecipe("Test Recipe").
 				WithBatchSize(volume.NewFromLiter(40)).
 				WithFermentable(
-					Fermentable{
+					fermentable.Fermentable{
 						Quantity: mass.NewFromKilogram(4),
 						Color:    color.NewFromSRM(3),
 					},
-					Fermentable{
+					fermentable.Fermentable{
 						Quantity: mass.NewFromKilogram(4),
 						Color:    color.NewFromSRM(5),
 					},
-					Fermentable{
+					fermentable.Fermentable{
 						Quantity: mass.NewFromKilogram(2),
 						Color:    color.NewFromSRM(5),
 					}),

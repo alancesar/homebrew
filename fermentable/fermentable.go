@@ -1,4 +1,4 @@
-package recipe
+package fermentable
 
 import (
 	"github.com/alancesar/homebrew/color"
