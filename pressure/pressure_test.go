@@ -94,3 +94,78 @@ func TestNewFromBar(t *testing.T) {
 		})
 	}
 }
+
+func TestNewFrom(t *testing.T) {
+	type args struct {
+		input string
+	}
+	tests := []struct {
+		name string
+		args args
+		want Pressure
+	}{
+		{
+			name: "Should parse from '1psi' string",
+			args: args{
+				input: "1psi",
+			},
+			want: NewFromPSI(1),
+		},
+		{
+			name: "Should parse from '1bar' string",
+			args: args{
+				input: "1bar",
+			},
+			want: NewFromBar(1),
+		},
+		{
+			name: "Should parse from '1psi' string",
+			args: args{
+				input: "1psi",
+			},
+			want: NewFromPSI(1),
+		},
+		{
+			name: "Should parse from '1at' string",
+			args: args{
+				input: "1at",
+			},
+			want: NewFromKgfcm2(1),
+		},
+		{
+			name: "Should parse from '1kgfcm2' string",
+			args: args{
+				input: "1kgfcm2",
+			},
+			want: NewFromKgfcm2(1),
+		},
+		{
+			name: "Should parse from '1kgf/cm2' string",
+			args: args{
+				input: "1kgf/cm2",
+			},
+			want: NewFromKgfcm2(1),
+		},
+		{
+			name: "Should parse from '1kgfcm²' string",
+			args: args{
+				input: "1kgfcm²",
+			},
+			want: NewFromKgfcm2(1),
+		},
+		{
+			name: "Should parse from '1kgf/cm²' string",
+			args: args{
+				input: "1kgf/cm²",
+			},
+			want: NewFromKgfcm2(1),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewFrom(tt.args.input); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewFrom() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
