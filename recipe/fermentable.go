@@ -5,7 +5,7 @@ import (
 	"github.com/alancesar/homebrew/mass"
 )
 
-type Grain struct {
+type Fermentable struct {
 	Quantity mass.Mass
 	Color    color.Color
 	PPG      float64

@@ -14,18 +14,18 @@ import (
 func buildRecipe() *Recipe {
 	return NewRecipe("Test Recipe").WithBatchSize(volume.NewFromLiter(40)).
 		WithWortCollected(volume.NewFromLiter(64)).
-		WithGrains(
-			Grain{
+		WithFermentable(
+			Fermentable{
 				PPG:      37,
 				Quantity: mass.NewFromKilogram(7),
 				Mashing:  true,
 			},
-			Grain{
+			Fermentable{
 				PPG:      33,
 				Quantity: mass.NewFromGram(700),
 				Mashing:  true,
 			},
-			Grain{
+			Fermentable{
 				PPG:      38,
 				Quantity: mass.NewFromKilogram(6),
 				Mashing:  true,
@@ -42,16 +42,16 @@ func TestRecipe_Color(t *testing.T) {
 			name: "Should calculate color of the recipe",
 			recipe: NewRecipe("Test Recipe").
 				WithBatchSize(volume.NewFromLiter(40)).
-				WithGrains(
-					Grain{
+				WithFermentable(
+					Fermentable{
 						Quantity: mass.NewFromKilogram(4),
 						Color:    color.NewFromSRM(3),
 					},
-					Grain{
+					Fermentable{
 						Quantity: mass.NewFromKilogram(4),
 						Color:    color.NewFromSRM(5),
 					},
-					Grain{
+					Fermentable{
 						Quantity: mass.NewFromKilogram(2),
 						Color:    color.NewFromSRM(5),
 					}),

@@ -36,7 +36,7 @@ type Recipe struct {
 	wortCollected *volume.Volume
 	batchSize     *volume.Volume
 	hops          []hop.Hop
-	grains        []Grain
+	fermentable   []Fermentable
 
 	expectedPreBoilDensity density.Density
 	expectedOG             density.Density
@@ -90,15 +90,15 @@ func (r *Recipe) WithHops(hops ...hop.Hop) *Recipe {
 	return r
 }
 
-func (r *Recipe) WithGrains(grains ...Grain) *Recipe {
-	r.grains = grains
+func (r *Recipe) WithFermentable(fermentable ...Fermentable) *Recipe {
+	r.fermentable = fermentable
 	r.calculateExpectedGravity()
 	return r
 }
 
 func (r *Recipe) Color() color.Color {
 	var mcu float64
-	for _, input := range r.grains {
+	for _, input := range r.fermentable {
 		mcu += input.Quantity.Pounds * input.Color.Lovibond / r.batchSize.Gallons
 	}
 	srm := 1.4922 * math.Pow(mcu, 0.6859)
@@ -149,7 +149,7 @@ func (r *Recipe) calculateExpectedGravity() {
 
 	var mashingPoints, notMashingPoints float64
 
-	for _, input := range r.grains {
+	for _, input := range r.fermentable {
 		if input.Mashing {
 			mashingPoints += input.PPG * input.Quantity.Pounds
 		} else {
