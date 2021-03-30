@@ -49,7 +49,7 @@ func TestCalculateGaretz(t *testing.T) {
 		want Bitterness
 	}{
 		{
-			name: "Should calculate IBU using Garetz's formula",
+			name: "Should calculate Bitterness using Garetz's formula",
 			args: args{
 				hops: []hop.Hop{
 					{

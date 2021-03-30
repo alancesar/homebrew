@@ -103,14 +103,14 @@ func TestRecipe_Alcohol(t *testing.T) {
 	}
 }
 
-func TestRecipe_IBU(t *testing.T) {
+func TestRecipe_Bitterness(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
 		want   bitterness.Table
 	}{
 		{
-			name: "Should calculate expected IBU",
+			name: "Should calculate expected Bitterness",
 			recipe: NewRecipe("Test Recipe").
 				WithBatchSize(volume.NewFromLiter(36)).
 				WithWortCollected(volume.NewFromLiter(42)).
@@ -157,8 +157,8 @@ func TestRecipe_IBU(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := tt.recipe
-			if got := r.IBU(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("IBU() = %v, want %v", got, tt.want)
+			if got := r.Bitterness(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Bitterness() = %v, want %v", got, tt.want)
 			}
 		})
 	}

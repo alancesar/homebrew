@@ -12,7 +12,7 @@ func TestTinseth_Calculate(t1 *testing.T) {
 		want Bitterness
 	}{
 		{
-			name: "Should calculate IBU using Tinseth's formula",
+			name: "Should calculate Bitterness using Tinseth's formula",
 			args: buildBasicTestArgs(),
 			want: NewFromIBU(39.0188834297751),
 		},

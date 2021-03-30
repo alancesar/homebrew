@@ -12,7 +12,7 @@ func TestRager_Calculate(t *testing.T) {
 		want Bitterness
 	}{
 		{
-			name: "Should calculate IBU using Rager's formula",
+			name: "Should calculate Bitterness using Rager's formula",
 			args: buildBasicTestArgs(),
 			want: NewFromIBU(44.84610801652261),
 		},

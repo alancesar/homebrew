@@ -17,7 +17,7 @@ func TestDaniel_Calculate(t *testing.T) {
 		want   Bitterness
 	}{
 		{
-			name: "Should calculate IBU using Daniel's formula",
+			name: "Should calculate Bitterness using Daniel's formula",
 			args: buildBasicTestArgs(),
 			want: NewFromIBU(40.621125725327666),
 		},
