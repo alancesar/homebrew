@@ -28,17 +28,14 @@ var constructorsMap = map[string]volumeConstructor{
 }
 
 func NewFrom(input string) Volume {
-	symbol, value, err := measure.ExtractSymbolAndValue(input)
-	if err != nil {
-		return Volume{}
-	}
+	volume := Volume{}
+	measure.NewFrom(input, func(symbol string, value float64) {
+		if constructor, exists := constructorsMap[symbol]; exists {
+			volume = constructor(value)
+		}
+	})
 
-	constructor, exists := constructorsMap[symbol]
-	if !exists {
-		return Volume{}
-	}
-
-	return constructor(value)
+	return volume
 }
 
 func NewFromMilliliter(value float64) Volume {

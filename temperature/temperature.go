@@ -23,17 +23,14 @@ var constructorsMap = map[string]temperatureConstructor{
 }
 
 func NewFrom(input string) Temperature {
-	symbol, value, err := measure.ExtractSymbolAndValue(input)
-	if err != nil {
-		return Temperature{}
-	}
+	temperature := Temperature{}
+	measure.NewFrom(input, func(symbol string, value float64) {
+		if constructor, exists := constructorsMap[symbol]; exists {
+			temperature = constructor(value)
+		}
+	})
 
-	constructor, exists := constructorsMap[symbol]
-	if !exists {
-		return Temperature{}
-	}
-
-	return constructor(value)
+	return temperature
 }
 
 func NewFromCelsius(value float64) Temperature {

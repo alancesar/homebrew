@@ -31,17 +31,14 @@ var constructorsMap = map[string]pressureConstructor{
 }
 
 func NewFrom(input string) Pressure {
-	symbol, value, err := measure.ExtractSymbolAndValue(input)
-	if err != nil {
-		return Pressure{}
-	}
+	pressure := Pressure{}
+	measure.NewFrom(input, func(symbol string, value float64) {
+		if constructor, exists := constructorsMap[symbol]; exists {
+			pressure = constructor(value)
+		}
+	})
 
-	constructor, exists := constructorsMap[symbol]
-	if !exists {
-		return Pressure{}
-	}
-
-	return constructor(value)
+	return pressure
 }
 
 func NewFromPSI(value float64) Pressure {

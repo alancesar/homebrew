@@ -35,17 +35,14 @@ var constructorsMap = map[string]massConstructor{
 }
 
 func NewFrom(input string) Mass {
-	symbol, value, err := measure.ExtractSymbolAndValue(input)
-	if err != nil {
-		return Mass{}
-	}
+	mass := Mass{}
+	measure.NewFrom(input, func(symbol string, value float64) {
+		if constructor, exists := constructorsMap[symbol]; exists {
+			mass = constructor(value)
+		}
+	})
 
-	constructor, exists := constructorsMap[symbol]
-	if !exists {
-		return Mass{}
-	}
-
-	return constructor(value)
+	return mass
 }
 
 func NewFromMilligram(value float64) Mass {

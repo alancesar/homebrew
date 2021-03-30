@@ -1,7 +1,6 @@
 package measure
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -14,19 +13,29 @@ const (
 	symbolIndex = 3
 )
 
-type Measure interface {
-	IsZero() bool
-}
+type (
+	Measure interface {
+		IsZero() bool
+	}
 
-func ExtractSymbolAndValue(input string) (string, float64, error) {
+	BindFn func(symbol string, value float64)
+)
+
+func ExtractSymbolAndValue(input string) (string, float64, bool) {
 	elements := regex.FindStringSubmatch(input)
 	if elements == nil {
-		return "", 0, fmt.Errorf("invalid wantValue: %s", input)
+		return "", 0, false
 	}
 
 	symbol := strings.ToLower(elements[symbolIndex])
 	value, err := strconv.ParseFloat(elements[valueIndex], 64)
-	return symbol, value, err
+	return symbol, value, err == nil
+}
+
+func NewFrom(input string, fn BindFn) {
+	if symbol, value, match := ExtractSymbolAndValue(input); match {
+		fn(symbol, value)
+	}
 }
 
 func HasSomeZeroValue(measures ...Measure) bool {

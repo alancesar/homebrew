@@ -11,7 +11,7 @@ func TestExtractSymbolAndValue(t *testing.T) {
 		args       args
 		wantSymbol string
 		wantValue  float64
-		wantErr    bool
+		wantMatch  bool
 	}{
 		{
 			name: "Should extract elements from decimal wantValue",
@@ -20,7 +20,7 @@ func TestExtractSymbolAndValue(t *testing.T) {
 			},
 			wantSymbol: "kg",
 			wantValue:  12.34,
-			wantErr:    false,
+			wantMatch:  true,
 		},
 		{
 			name: "Should extract elements from integer wantValue",
@@ -29,7 +29,7 @@ func TestExtractSymbolAndValue(t *testing.T) {
 			},
 			wantSymbol: "oz",
 			wantValue:  12,
-			wantErr:    false,
+			wantMatch:  true,
 		},
 		{
 			name: "Should extract elements with blank space between wantValue and wantSymbol",
@@ -38,7 +38,7 @@ func TestExtractSymbolAndValue(t *testing.T) {
 			},
 			wantSymbol: "g",
 			wantValue:  34,
-			wantErr:    false,
+			wantMatch:  true,
 		},
 		{
 			name: "Should extract elements with uppercase and return lowercase",
@@ -47,35 +47,35 @@ func TestExtractSymbolAndValue(t *testing.T) {
 			},
 			wantSymbol: "l",
 			wantValue:  56,
-			wantErr:    false,
+			wantMatch:  true,
 		},
 		{
-			name: "Should return error if not contains symbol",
+			name: "Should not wantMatch if not contains symbol",
 			args: args{
 				input: "12",
 			},
-			wantErr: true,
+			wantMatch: false,
 		},
 		{
-			name: "Should return error if not contains value",
+			name: "Should not wantMatch if not contains value",
 			args: args{
 				input: "g",
 			},
-			wantErr: true,
+			wantMatch: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, got1, err := ExtractSymbolAndValue(tt.args.input)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ExtractSymbolAndValue() error = %v, wantErr %v", err, tt.wantErr)
+			symbol, value, match := ExtractSymbolAndValue(tt.args.input)
+			if match != tt.wantMatch {
+				t.Errorf("ExtractSymbolAndValue() wantMatch = %v, wantMatch %v", match, tt.wantMatch)
 				return
 			}
-			if got != tt.wantSymbol {
-				t.Errorf("ExtractSymbolAndValue() got = %v, wantSymbol %v", got, tt.wantSymbol)
+			if symbol != tt.wantSymbol {
+				t.Errorf("ExtractSymbolAndValue() symbol = %v, wantSymbol %v", symbol, tt.wantSymbol)
 			}
-			if got1 != tt.wantValue {
-				t.Errorf("ExtractSymbolAndValue() got1 = %v, wantSymbol %v", got1, tt.wantValue)
+			if value != tt.wantValue {
+				t.Errorf("ExtractSymbolAndValue() value = %v, wantSymbol %v", value, tt.wantValue)
 			}
 		})
 	}
