@@ -7,4 +7,5 @@ type Hop struct {
 	BoilTime   int
 	AlphaAcids float64
 	Pellet     bool
+	DryHopping bool
 }
