@@ -17,7 +17,7 @@ func NewTinsethCalculator() *Tinseth {
 func (t *Tinseth) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) (ibu float64) {
 	bignessFactor := t.calculateBignessFactor(wortGravity)
 
-	for _, input := range hops {
+	for _, input := range removeDryHopping(hops) {
 		mglAlphaAcid := input.AlphaAcids * input.Quantity.Grams * 1000
 		utilization := t.calculateUtilization(bignessFactor, input.BoilTime)
 		if input.Pellet {

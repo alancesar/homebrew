@@ -31,7 +31,7 @@ func NewDanielCalculator() *Daniel {
 }
 
 func (d *Daniel) Calculate(hops []hop.Hop, _ density.Density, batchSize volume.Volume) (ibu float64) {
-	for _, input := range hops {
+	for _, input := range removeDryHopping(hops) {
 		uf := d.getUtilizationFactor(input.BoilTime)
 		ibu += uf * (input.AlphaAcids * input.Quantity.Grams * 1000) / batchSize.Liters
 	}

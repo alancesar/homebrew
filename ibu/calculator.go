@@ -9,7 +9,7 @@ import (
 
 func CalculateGaretz(hops []hop.Hop, wortGravity density.Density, wortCollected, batchSize volume.Volume) (ibu float64) {
 	caFactor := batchSize.Gallons * calculateCombinedAdjustment(wortGravity, wortCollected, batchSize)
-	for _, input := range hops {
+	for _, input := range removeDryHopping(hops) {
 		utilization := 7.2994 + (15.0746 * math.Tanh((float64(input.BoilTime)-21.86)/24.71))
 		ibu += (utilization * (input.AlphaAcids * 100) * input.Quantity.Ounces * 0.749) / caFactor
 	}
@@ -27,4 +27,14 @@ func calculateCombinedAdjustment(wortGravity density.Density, wortCollected, bat
 	tf := ((2500 / 550) * 0.02) + 1
 
 	return gf * hf * tf
+}
+
+func removeDryHopping(hops []hop.Hop) (output []hop.Hop) {
+	for _, input := range hops {
+		if !input.DryHopping {
+			output = append(output, input)
+		}
+	}
+
+	return output
 }

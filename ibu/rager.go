@@ -20,7 +20,7 @@ func (r *Rager) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize
 	adjustment := r.calculateGravityAdjustment(wortGravity)
 	gravityAdjustmentFactor := batchSize.Liters * (1 + adjustment)
 
-	for _, input := range hops {
+	for _, input := range removeDryHopping(hops) {
 		utilization := r.calculateUtilization(input.BoilTime)
 		ibu += (input.Quantity.Grams * utilization * input.AlphaAcids * 1000) / gravityAdjustmentFactor
 	}
