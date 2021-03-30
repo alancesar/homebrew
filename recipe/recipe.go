@@ -115,7 +115,7 @@ func (r *Recipe) ABV() alcohol.Abv {
 	return alcohol.Calculate(r.og, r.fg)
 }
 
-func (r *Recipe) ExpectedIBU() bitterness.Table {
+func (r *Recipe) IBU() bitterness.Table {
 	ibuValues := bitterness.Table{}
 
 	if measure.HasSomeZeroValue(r.og, r.batchSize, r.wortCollected) {

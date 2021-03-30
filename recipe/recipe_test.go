@@ -103,7 +103,7 @@ func TestRecipe_ABV(t *testing.T) {
 	}
 }
 
-func TestRecipe_ExpectedIBU(t *testing.T) {
+func TestRecipe_IBU(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
@@ -157,8 +157,8 @@ func TestRecipe_ExpectedIBU(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := tt.recipe
-			if got := r.ExpectedIBU(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ExpectedIBU() = %v, want %v", got, tt.want)
+			if got := r.IBU(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("IBU() = %v, want %v", got, tt.want)
 			}
 		})
 	}
