@@ -8,12 +8,18 @@ import (
 
 const maxDanielFactor = .27
 
-type danielUtilizationFactor struct {
-	time  int
-	value float64
-}
+type (
+	utilizationFactor struct {
+		time  int
+		value float64
+	}
 
-var danielUtilizationFactorTable = []danielUtilizationFactor{
+	utilizationFactorTable []utilizationFactor
+
+	Daniel struct{}
+)
+
+var danielUtilizationFactorTable = utilizationFactorTable{
 	{10, .05},
 	{20, .12},
 	{30, .15},
@@ -21,9 +27,6 @@ var danielUtilizationFactorTable = []danielUtilizationFactor{
 	{60, .22},
 	{75, .24},
 	{90, .27},
-}
-
-type Daniel struct {
 }
 
 func NewDanielCalculator() *Daniel {
