@@ -15,12 +15,12 @@ const (
 	defaultAttenuation = 0.72
 )
 
-type IBUCalculator interface {
+type ibuCalculator interface {
 	Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) float64
 }
 
 var (
-	ibuCalculators = map[string]IBUCalculator{
+	ibuCalculators = map[string]ibuCalculator{
 		"Tinseth": ibu.NewTinsethCalculator(),
 		"Rager":   ibu.NewRagerCalculator(),
 		"Daniel":  ibu.NewDanielCalculator(),
