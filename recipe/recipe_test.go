@@ -148,9 +148,18 @@ func TestRecipe_Bitterness(t *testing.T) {
 					},
 				),
 			want: bitterness.Table{
-				"Tinseth": bitterness.NewFromIBU(73.6053858587605),
-				"Rager":   bitterness.NewFromIBU(95.80235532474533),
-				"Daniel":  bitterness.NewFromIBU(79.1463888888889),
+				bitterness.TableItem{
+					Method: "Tinseth",
+					Value:  bitterness.NewFromIBU(73.6053858587605),
+				},
+				{
+					Method: "Rager",
+					Value:  bitterness.NewFromIBU(95.80235532474533),
+				},
+				{
+					Method: "Daniel",
+					Value:  bitterness.NewFromIBU(79.1463888888889),
+				},
 			},
 		},
 	}

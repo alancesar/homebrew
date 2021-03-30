@@ -1,8 +1,6 @@
 package api
 
 import (
-	alcohol "github.com/alancesar/homebrew/abv"
-	"github.com/alancesar/homebrew/bitterness"
 	"github.com/alancesar/homebrew/color"
 	"github.com/alancesar/homebrew/density"
 	"github.com/alancesar/homebrew/fermentable"
@@ -19,7 +17,7 @@ func buildTestRecipe() *recipe.Recipe {
 		WithEfficiency(0.75).
 		WithAttenuation(0.72).
 		WithOG(density.NewFromSG(1.040)).
-		WithFG(density.NewFromBrix(22)).
+		WithFG(density.NewFromBrix(6)).
 		WithWortCollected(volume.NewFromLiter(64)).
 		WithBatchSize(volume.NewFromLiter(40)).
 		WithHops(
@@ -49,13 +47,13 @@ func buildTestRecipe() *recipe.Recipe {
 			fermentable.Fermentable{
 				Quantity: mass.NewFromKilogram(4),
 				Color:    color.NewFromLovibond(5),
-				PPG:      6,
-				Mashing:  false,
+				PPG:      40,
+				Mashing:  true,
 			},
 			fermentable.Fermentable{
 				Quantity: mass.NewFromGram(400),
 				Color:    color.NewFromLovibond(4),
-				PPG:      2,
+				PPG:      20,
 				Mashing:  false,
 			},
 		)
@@ -78,7 +76,7 @@ func TestBuildRecipe(t *testing.T) {
 					Efficiency:    75,
 					Attenuation:   72,
 					OG:            1.040,
-					FG:            22,
+					FG:            6,
 					WortCollected: "64l",
 					BatchSize:     "40l",
 					Hops: []Hop{
@@ -108,13 +106,13 @@ func TestBuildRecipe(t *testing.T) {
 						{
 							Quantity: "4kg",
 							Lovibond: 5,
-							PPG:      6,
-							Mashing:  false,
+							PPG:      40,
+							Mashing:  true,
 						},
 						{
 							Quantity: "400g",
 							Lovibond: 4,
-							PPG:      2,
+							PPG:      20,
 							Mashing:  false,
 						},
 					},
@@ -147,18 +145,52 @@ func TestBuildResponse(t *testing.T) {
 				r: *buildTestRecipe(),
 			},
 			want: Response{
-				ExpectedBitterness: bitterness.Table{
-					"Daniel":  bitterness.NewFromIBU(36),
-					"Rager":   bitterness.NewFromIBU(42.411401470745346),
-					"Tinseth": bitterness.NewFromIBU(47.32172678016644),
+				Bitterness: []Bitterness{
+					{
+						Method: "Tinseth",
+						Value: BitternessValue{
+							IBU: 47,
+						},
+					},
+					{
+						Method: "Rager",
+						Value: BitternessValue{
+							IBU: 42,
+						},
+					},
+					{
+						Method: "Daniel",
+						Value: BitternessValue{
+							IBU: 36,
+						},
+					},
 				},
-				ExpectedPreBoilDensity: density.NewFromSG(1.00323384686304),
-				ExpectedOG:             density.NewFromSG(1.005174154980864),
-				ExpectedFG:             density.NewFromSG(1.0014487633946418),
-				ExpectedABV: alcohol.Abv{
-					Abv:         0.0046436360929480195,
-					Abw:         0.003714908874358416,
-					Attenuation: 0.720000000000012,
+				Alcohol: Alcohol{
+					ABV:         2.18,
+					ABW:         1.74,
+					Attenuation: 40.79,
+				},
+				Color: Color{
+					SRM:      4,
+					EBC:      8,
+					Lovibond: 4,
+				},
+				ExpectedPreBoilDensity: Density{
+					SG:   1.017,
+					Brix: 4,
+				},
+				ExpectedOG: Density{
+					SG:   1.027,
+					Brix: 7,
+				},
+				ExpectedFG: Density{
+					SG:   1.007,
+					Brix: 2,
+				},
+				ExpectedABV: Alcohol{
+					ABV:         2.48,
+					ABW:         1.98,
+					Attenuation: 72,
 				},
 			},
 		},
