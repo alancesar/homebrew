@@ -1,4 +1,4 @@
-package ibu
+package bitterness
 
 import (
 	"github.com/alancesar/homebrew/density"
@@ -30,13 +30,15 @@ func NewDanielCalculator() *Daniel {
 	return &Daniel{}
 }
 
-func (d *Daniel) Calculate(hops []hop.Hop, _ density.Density, batchSize volume.Volume) (ibu float64) {
+func (d *Daniel) Calculate(hops []hop.Hop, _ density.Density, batchSize volume.Volume) Bitterness {
+	var ibu float64
+
 	for _, input := range removeDryHopping(hops) {
 		uf := d.getUtilizationFactor(input.BoilTime)
 		ibu += uf * (input.AlphaAcids * input.Quantity.Grams * 1000) / batchSize.Liters
 	}
 
-	return ibu
+	return NewFromIBU(ibu)
 }
 
 func (d *Daniel) getUtilizationFactor(boilTime int) float64 {

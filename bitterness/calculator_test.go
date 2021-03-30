@@ -1,10 +1,11 @@
-package ibu
+package bitterness
 
 import (
 	"github.com/alancesar/homebrew/density"
 	"github.com/alancesar/homebrew/hop"
 	"github.com/alancesar/homebrew/mass"
 	"github.com/alancesar/homebrew/volume"
+	"reflect"
 	"testing"
 )
 
@@ -16,9 +17,9 @@ func TestCalculateGaretz(t *testing.T) {
 		batchSize     volume.Volume
 	}
 	tests := []struct {
-		name    string
-		args    args
-		wantIbu float64
+		name string
+		args args
+		want Bitterness
 	}{
 		{
 			name: "Should calculate IBU using Garetz's formula",
@@ -41,14 +42,14 @@ func TestCalculateGaretz(t *testing.T) {
 				wortCollected: volume.NewFromGallon(6.5),
 				batchSize:     volume.NewFromGallon(5),
 			},
-			wantIbu: 26.360484634085594,
+			want: NewFromIBU(26.360484634085594),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotIbu := CalculateGaretz(tt.args.hops, tt.args.wortGravity, tt.args.wortCollected, tt.args.batchSize)
-			if gotIbu != tt.wantIbu {
-				t.Errorf("CalculateGaretz() = %v, wantIbu %v", gotIbu, tt.wantIbu)
+			got := CalculateGaretz(tt.args.hops, tt.args.wortGravity, tt.args.wortCollected, tt.args.batchSize)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("CalculateGaretz() = %v, want %v", got, tt.want)
 			}
 		})
 	}

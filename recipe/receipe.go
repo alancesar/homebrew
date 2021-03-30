@@ -2,10 +2,10 @@ package recipe
 
 import (
 	alcohol "github.com/alancesar/homebrew/abv"
+	"github.com/alancesar/homebrew/bitterness"
 	"github.com/alancesar/homebrew/color"
 	"github.com/alancesar/homebrew/density"
 	"github.com/alancesar/homebrew/hop"
-	"github.com/alancesar/homebrew/ibu"
 	"github.com/alancesar/homebrew/volume"
 	"math"
 )
@@ -16,14 +16,14 @@ const (
 )
 
 type ibuCalculator interface {
-	Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) float64
+	Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) bitterness.Bitterness
 }
 
 var (
 	ibuCalculators = map[string]ibuCalculator{
-		"Tinseth": ibu.NewTinsethCalculator(),
-		"Rager":   ibu.NewRagerCalculator(),
-		"Daniel":  ibu.NewDanielCalculator(),
+		"Tinseth": bitterness.NewTinsethCalculator(),
+		"Rager":   bitterness.NewRagerCalculator(),
+		"Daniel":  bitterness.NewDanielCalculator(),
 	}
 )
 
@@ -113,8 +113,8 @@ func (r *Recipe) ABV() alcohol.Abv {
 	return alcohol.Abv{}
 }
 
-func (r *Recipe) IBU() map[string]float64 {
-	ibuValues := map[string]float64{}
+func (r *Recipe) IBU() map[string]bitterness.Bitterness {
+	ibuValues := map[string]bitterness.Bitterness{}
 
 	if r.og != nil && r.batchSize != nil && r.wortCollected != nil {
 		wortGravity := density.NewFromSG(((r.batchSize.Gallons / r.wortCollected.Gallons) * (r.og.SG - 1)) + 1)

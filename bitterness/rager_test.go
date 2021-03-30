@@ -1,10 +1,11 @@
-package ibu
+package bitterness
 
 import (
 	"github.com/alancesar/homebrew/density"
 	"github.com/alancesar/homebrew/hop"
 	"github.com/alancesar/homebrew/mass"
 	"github.com/alancesar/homebrew/volume"
+	"reflect"
 	"testing"
 )
 
@@ -15,9 +16,9 @@ func TestRager_Calculate(t *testing.T) {
 		batchSize   volume.Volume
 	}
 	tests := []struct {
-		name    string
-		args    args
-		wantIbu float64
+		name string
+		args args
+		want Bitterness
 	}{
 		{
 			name: "Should calculate IBU using Rager's formula",
@@ -39,14 +40,15 @@ func TestRager_Calculate(t *testing.T) {
 				wortGravity: density.NewFromSG(1.050),
 				batchSize:   volume.NewFromGallon(5),
 			},
-			wantIbu: 44.84610801652261,
+			want: NewFromIBU(44.84610801652261),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := &Rager{}
-			if gotIbu := r.Calculate(tt.args.hops, tt.args.wortGravity, tt.args.batchSize); gotIbu != tt.wantIbu {
-				t.Errorf("Calculate() = %v, want %v", gotIbu, tt.wantIbu)
+			got := r.Calculate(tt.args.hops, tt.args.wortGravity, tt.args.batchSize)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Calculate() = %v, want %v", got, tt.want)
 			}
 		})
 	}

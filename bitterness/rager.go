@@ -1,4 +1,4 @@
-package ibu
+package bitterness
 
 import (
 	"github.com/alancesar/homebrew/density"
@@ -16,7 +16,8 @@ func NewRagerCalculator() *Rager {
 	return &Rager{}
 }
 
-func (r *Rager) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) (ibu float64) {
+func (r *Rager) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) Bitterness {
+	var ibu float64
 	adjustment := r.calculateGravityAdjustment(wortGravity)
 	gravityAdjustmentFactor := batchSize.Liters * (1 + adjustment)
 
@@ -25,7 +26,7 @@ func (r *Rager) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize
 		ibu += (input.Quantity.Grams * utilization * input.AlphaAcids * 1000) / gravityAdjustmentFactor
 	}
 
-	return ibu
+	return NewFromIBU(ibu)
 }
 
 func (*Rager) calculateGravityAdjustment(wortGravity density.Density) float64 {

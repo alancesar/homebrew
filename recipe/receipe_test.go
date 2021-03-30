@@ -2,6 +2,7 @@ package recipe
 
 import (
 	"github.com/alancesar/homebrew/abv"
+	"github.com/alancesar/homebrew/bitterness"
 	"github.com/alancesar/homebrew/color"
 	"github.com/alancesar/homebrew/density"
 	"github.com/alancesar/homebrew/hop"
@@ -105,7 +106,7 @@ func TestRecipe_IBU(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
-		want   map[string]float64
+		want   map[string]bitterness.Bitterness
 	}{
 		{
 			name: "Should calculate IBU",
@@ -145,10 +146,10 @@ func TestRecipe_IBU(t *testing.T) {
 						Pellet:     true,
 					},
 				),
-			want: map[string]float64{
-				"Tinseth": 73.6053858587605,
-				"Rager":   95.80235532474533,
-				"Daniel":  79.1463888888889,
+			want: map[string]bitterness.Bitterness{
+				"Tinseth": bitterness.NewFromIBU(73.6053858587605),
+				"Rager":   bitterness.NewFromIBU(95.80235532474533),
+				"Daniel":  bitterness.NewFromIBU(79.1463888888889),
 			},
 		},
 	}

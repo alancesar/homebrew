@@ -1,4 +1,4 @@
-package ibu
+package bitterness
 
 import (
 	"github.com/alancesar/homebrew/density"
@@ -7,14 +7,16 @@ import (
 	"math"
 )
 
-func CalculateGaretz(hops []hop.Hop, wortGravity density.Density, wortCollected, batchSize volume.Volume) (ibu float64) {
+func CalculateGaretz(hops []hop.Hop, wortGravity density.Density, wortCollected, batchSize volume.Volume) Bitterness {
+	var ibu float64
 	caFactor := batchSize.Gallons * calculateCombinedAdjustment(wortGravity, wortCollected, batchSize)
+
 	for _, input := range removeDryHopping(hops) {
 		utilization := 7.2994 + (15.0746 * math.Tanh((float64(input.BoilTime)-21.86)/24.71))
 		ibu += (utilization * (input.AlphaAcids * 100) * input.Quantity.Ounces * 0.749) / caFactor
 	}
 
-	return ibu
+	return NewFromIBU(ibu)
 }
 
 func calculateCombinedAdjustment(wortGravity density.Density, wortCollected, batchSize volume.Volume) float64 {

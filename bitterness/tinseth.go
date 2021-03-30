@@ -1,4 +1,4 @@
-package ibu
+package bitterness
 
 import (
 	"github.com/alancesar/homebrew/density"
@@ -14,7 +14,8 @@ func NewTinsethCalculator() *Tinseth {
 	return &Tinseth{}
 }
 
-func (t *Tinseth) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) (ibu float64) {
+func (t *Tinseth) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) Bitterness {
+	var ibu float64
 	bignessFactor := t.calculateBignessFactor(wortGravity)
 
 	for _, input := range removeDryHopping(hops) {
@@ -27,7 +28,7 @@ func (t *Tinseth) Calculate(hops []hop.Hop, wortGravity density.Density, batchSi
 		ibu += utilization * (mglAlphaAcid / batchSize.Liters)
 	}
 
-	return ibu
+	return NewFromIBU(ibu)
 }
 
 func (t *Tinseth) calculateUtilization(bignessFactor float64, boilTime int) float64 {
