@@ -17,6 +17,10 @@ type (
 	pressureConstructor func(value float64) Pressure
 )
 
+func (p Pressure) IsZero() bool {
+	return p.PSI == 0 && p.Kgfcm2 == 0 && p.Bar == 0
+}
+
 var constructorsMap = map[string]pressureConstructor{
 	"psi":     NewFromPSI,
 	"bar":     NewFromBar,

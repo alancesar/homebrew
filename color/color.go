@@ -27,6 +27,10 @@ type Color struct {
 	Lovibond float64
 }
 
+func (c Color) IsZero() bool {
+	return c.SRM == 0 && c.EBC == 0 && c.Lovibond == 0
+}
+
 func (c *Color) RGB() string {
 	srm := int(math.Round(c.SRM))
 

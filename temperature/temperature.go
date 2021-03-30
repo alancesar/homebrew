@@ -11,6 +11,10 @@ type (
 	temperatureConstructor func(value float64) Temperature
 )
 
+func (t Temperature) IsZero() bool {
+	return t.Celsius == 0 && t.Fahrenheit == 0
+}
+
 var constructorsMap = map[string]temperatureConstructor{
 	"c":  NewFromCelsius,
 	"ºc": NewFromCelsius,
