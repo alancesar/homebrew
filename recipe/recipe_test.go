@@ -1,7 +1,7 @@
 package recipe
 
 import (
-	"github.com/alancesar/homebrew/abv"
+	"github.com/alancesar/homebrew/alcohol"
 	"github.com/alancesar/homebrew/bitterness"
 	"github.com/alancesar/homebrew/color"
 	"github.com/alancesar/homebrew/density"
@@ -75,20 +75,20 @@ func TestRecipe_Color(t *testing.T) {
 	}
 }
 
-func TestRecipe_ABV(t *testing.T) {
+func TestRecipe_Alcohol(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
-		want   abv.Abv
+		want   alcohol.Alcohol
 	}{
 		{
-			name: "Should calculate ABV value",
+			name: "Should calculate Alcohol value",
 			recipe: NewRecipe("Test Recipe").
 				WithOG(density.NewFromSG(1.042)).
 				WithFG(density.NewFromSG(1.008)),
-			want: abv.Abv{
-				Abv:         0.04480076975680501,
-				Abw:         0.03584061580544401,
+			want: alcohol.Alcohol{
+				ABV:         0.04480076975680501,
+				ABW:         0.03584061580544401,
 				Attenuation: 0.8095238095238095,
 			},
 		},
@@ -96,8 +96,8 @@ func TestRecipe_ABV(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := tt.recipe
-			if got := r.ABV(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ABV() = %v, want %v", got, tt.want)
+			if got := r.Alcohol(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Alcohol() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -234,14 +234,14 @@ func TestRecipe_ExpectedABV(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
-		want   abv.Abv
+		want   alcohol.Alcohol
 	}{
 		{
-			name:   "Should calculate expected ABV",
+			name:   "Should calculate expected Alcohol",
 			recipe: buildRecipe(),
-			want: abv.Abv{
-				Abv:         0.08098190520848729,
-				Abw:         0.06478552416678983,
+			want: alcohol.Alcohol{
+				ABV:         0.08098190520848729,
+				ABW:         0.06478552416678983,
 				Attenuation: 0.7199999999999996,
 			},
 		},
@@ -249,8 +249,8 @@ func TestRecipe_ExpectedABV(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := tt.recipe
-			if got := r.ExpectedABV(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ExpectedABV() = %v, want %v", got, tt.want)
+			if got := r.ExpectedAlcohol(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ExpectedAlcohol() = %v, want %v", got, tt.want)
 			}
 		})
 	}

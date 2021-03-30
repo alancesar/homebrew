@@ -1,4 +1,4 @@
-package abv
+package alcohol
 
 import (
 	"github.com/alancesar/homebrew/density"
@@ -14,17 +14,17 @@ func TestCalculate(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want Abv
+		want Alcohol
 	}{
 		{
-			name: "Should calculate ABV",
+			name: "Should calculate Alcohol",
 			args: args{
 				og: density.NewFromSG(1.042),
 				fg: density.NewFromSG(1.008),
 			},
-			want: Abv{
-				Abv:         0.04480076975680501,
-				Abw:         0.03584061580544401,
+			want: Alcohol{
+				ABV:         0.04480076975680501,
+				ABW:         0.03584061580544401,
 				Attenuation: 0.8095238095238095,
 			},
 		},

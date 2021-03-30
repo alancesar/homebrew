@@ -1,7 +1,7 @@
 package recipe
 
 import (
-	alcohol "github.com/alancesar/homebrew/abv"
+	"github.com/alancesar/homebrew/alcohol"
 	"github.com/alancesar/homebrew/bitterness"
 	"github.com/alancesar/homebrew/color"
 	"github.com/alancesar/homebrew/density"
@@ -43,7 +43,7 @@ type Recipe struct {
 	expectedPreBoilDensity density.Density
 	expectedOG             density.Density
 	expectedFG             density.Density
-	expectedABV            alcohol.Abv
+	expectedABV            alcohol.Alcohol
 }
 
 func NewRecipe(name string) *Recipe {
@@ -107,9 +107,9 @@ func (r *Recipe) Color() color.Color {
 	return color.NewFromSRM(srm)
 }
 
-func (r *Recipe) ABV() alcohol.Abv {
+func (r *Recipe) Alcohol() alcohol.Alcohol {
 	if measure.HasSomeZeroValue(r.og, r.fg) {
-		return alcohol.Abv{}
+		return alcohol.Alcohol{}
 	}
 
 	return alcohol.Calculate(r.og, r.fg)
@@ -142,7 +142,7 @@ func (r *Recipe) ExpectedFG() density.Density {
 	return r.expectedFG
 }
 
-func (r *Recipe) ExpectedABV() alcohol.Abv {
+func (r *Recipe) ExpectedAlcohol() alcohol.Alcohol {
 	return r.expectedABV
 }
 
