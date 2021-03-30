@@ -1,10 +1,24 @@
 package bitterness
 
-type Table map[string]Bitterness
+type (
+	Table  []TableItem
+	Method string
 
-type Bitterness struct {
-	IBU float64
-}
+	TableItem struct {
+		Method Method
+		Value  Bitterness
+	}
+
+	Bitterness struct {
+		IBU float64
+	}
+)
+
+const (
+	TinsethMethod Method = "Tinseth"
+	RagerMethod   Method = "Rager"
+	DanielMethod  Method = "Daniel"
+)
 
 func (b Bitterness) IsZero() bool {
 	return b.IBU == 0

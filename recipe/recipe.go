@@ -17,15 +17,16 @@ const (
 	defaultAttenuation = 0.72
 )
 
-type ibuCalculator interface {
+type bitternessCalculator interface {
 	Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) bitterness.Bitterness
+	Method() bitterness.Method
 }
 
 var (
-	ibuCalculators = map[string]ibuCalculator{
-		"Tinseth": bitterness.NewTinsethCalculator(),
-		"Rager":   bitterness.NewRagerCalculator(),
-		"Daniel":  bitterness.NewDanielCalculator(),
+	calculators = []bitternessCalculator{
+		bitterness.NewTinsethCalculator(),
+		bitterness.NewRagerCalculator(),
+		bitterness.NewDanielCalculator(),
 	}
 )
 
@@ -115,19 +116,20 @@ func (r *Recipe) Alcohol() alcohol.Alcohol {
 	return alcohol.Calculate(r.og, r.fg)
 }
 
-func (r *Recipe) Bitterness() bitterness.Table {
-	ibuValues := bitterness.Table{}
-
+func (r *Recipe) Bitterness() (table bitterness.Table) {
 	if measure.HasSomeZeroValue(r.og, r.batchSize, r.wortCollected) {
-		return ibuValues
+		return table
 	}
 
 	wortGravity := density.NewFromSG(((r.batchSize.Gallons / r.wortCollected.Gallons) * (r.og.SG - 1)) + 1)
-	for name, calculator := range ibuCalculators {
-		ibuValues[name] = calculator.Calculate(r.hops, wortGravity, r.batchSize)
+	for _, calculator := range calculators {
+		table = append(table, bitterness.TableItem{
+			Method: calculator.Method(),
+			Value:  calculator.Calculate(r.hops, wortGravity, r.batchSize),
+		})
 	}
 
-	return ibuValues
+	return table
 }
 
 func (r *Recipe) ExpectedPreBoilDensity() density.Density {

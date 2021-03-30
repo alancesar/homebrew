@@ -16,6 +16,10 @@ func NewRagerCalculator() *Rager {
 	return &Rager{}
 }
 
+func (*Rager) Method() Method {
+	return RagerMethod
+}
+
 func (r *Rager) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) Bitterness {
 	var ibu float64
 	adjustment := r.calculateGravityAdjustment(wortGravity)

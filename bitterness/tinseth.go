@@ -14,6 +14,10 @@ func NewTinsethCalculator() *Tinseth {
 	return &Tinseth{}
 }
 
+func (*Tinseth) Method() Method {
+	return TinsethMethod
+}
+
 func (t *Tinseth) Calculate(hops []hop.Hop, wortGravity density.Density, batchSize volume.Volume) Bitterness {
 	var ibu float64
 	bignessFactor := t.calculateBignessFactor(wortGravity)

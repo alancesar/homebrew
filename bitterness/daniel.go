@@ -33,6 +33,10 @@ func NewDanielCalculator() *Daniel {
 	return &Daniel{}
 }
 
+func (*Daniel) Method() Method {
+	return DanielMethod
+}
+
 func (d *Daniel) Calculate(hops []hop.Hop, _ density.Density, batchSize volume.Volume) Bitterness {
 	var ibu float64
 
