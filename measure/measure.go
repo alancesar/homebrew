@@ -14,6 +14,11 @@ const (
 	symbolIndex = 3
 )
 
+type Measure interface {
+	IsZero() bool
+	IsNotZero() bool
+}
+
 func ExtractSymbolAndValue(input string) (string, float64, error) {
 	elements := regex.FindStringSubmatch(input)
 	if elements == nil {
