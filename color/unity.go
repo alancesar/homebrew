@@ -56,7 +56,7 @@ func NewFromEBC(value float64) Color {
 	}
 }
 
-func FromLovibond(value float64) Color {
+func NewFromLovibond(value float64) Color {
 	srm := srmInLovibond(value)
 	return Color{
 		SRM:      srm,

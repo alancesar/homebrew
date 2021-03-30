@@ -65,7 +65,7 @@ func TestNewFromEbc(t *testing.T) {
 	}
 }
 
-func TestFromLovibond(t *testing.T) {
+func TestNewFromLovibond(t *testing.T) {
 	type args struct {
 		value float64
 	}
@@ -88,8 +88,8 @@ func TestFromLovibond(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := FromLovibond(tt.args.value); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("FromLovibond() = %v, want %v", got, tt.want)
+			if got := NewFromLovibond(tt.args.value); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewFromLovibond() = %v, want %v", got, tt.want)
 			}
 		})
 	}
