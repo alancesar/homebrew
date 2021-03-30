@@ -17,6 +17,14 @@ type (
 	volumeConstructor func(value float64) Volume
 )
 
+func (v *Volume) IsZero() bool {
+	return v.Liters == 0 && v.Gallons == 0
+}
+
+func (v *Volume) IsNotZero() bool {
+	return !v.IsZero()
+}
+
 var constructorsMap = map[string]volumeConstructor{
 	"ml":  NewFromMilliliter,
 	"l":   NewFromLiter,
