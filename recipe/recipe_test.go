@@ -107,7 +107,7 @@ func TestRecipe_IBU(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
-		want   map[string]bitterness.Bitterness
+		want   bitterness.Table
 	}{
 		{
 			name: "Should calculate IBU",

@@ -1,5 +1,7 @@
 package bitterness
 
+type Table map[string]Bitterness
+
 type Bitterness struct {
 	IBU float64
 }
