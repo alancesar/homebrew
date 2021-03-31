@@ -173,7 +173,7 @@ func TestRecipe_Bitterness(t *testing.T) {
 	}
 }
 
-func TestRecipe_ExpectedPreBoilDensity(t *testing.T) {
+func TestRecipe_ExpectedPBG(t *testing.T) {
 	tests := []struct {
 		name   string
 		recipe *Recipe
@@ -188,8 +188,8 @@ func TestRecipe_ExpectedPreBoilDensity(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := tt.recipe
-			if got := r.ExpectedPreBoilDensity(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ExpectedPreBoilDensity() = %v, want %v", got, tt.want)
+			if got := r.ExpectedPBG(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ExpectedPBG() = %v, want %v", got, tt.want)
 			}
 		})
 	}

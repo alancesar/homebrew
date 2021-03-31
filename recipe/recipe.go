@@ -41,10 +41,10 @@ type Recipe struct {
 	hops          []hop.Hop
 	fermentable   []fermentable.Fermentable
 
-	expectedPreBoilDensity density.Density
-	expectedOG             density.Density
-	expectedFG             density.Density
-	expectedABV            alcohol.Alcohol
+	expectedPBG density.Density
+	expectedOG  density.Density
+	expectedFG  density.Density
+	expectedABV alcohol.Alcohol
 }
 
 func NewRecipe(name string) *Recipe {
@@ -132,8 +132,8 @@ func (r *Recipe) Bitterness() (table bitterness.Table) {
 	return table
 }
 
-func (r *Recipe) ExpectedPreBoilDensity() density.Density {
-	return r.expectedPreBoilDensity
+func (r *Recipe) ExpectedPBG() density.Density {
+	return r.expectedPBG
 }
 
 func (r *Recipe) ExpectedOG() density.Density {
@@ -155,7 +155,7 @@ func (r *Recipe) calculateExpectedGravity() {
 
 	mashingPoints, notMashingPoints := calculatePPGPoints(r.fermentable)
 	points := (mashingPoints * r.efficiency) + notMashingPoints
-	r.expectedPreBoilDensity = density.NewFromSG(((points / r.wortCollected.Gallons) * 0.001) + 1)
+	r.expectedPBG = density.NewFromSG(((points / r.wortCollected.Gallons) * 0.001) + 1)
 	r.expectedOG = density.NewFromSG(((points / r.batchSize.Gallons) * 0.001) + 1)
 	r.expectedFG = density.NewFromSG(((r.expectedOG.SG - 1) * (1 - r.attenuation)) + 1)
 	r.expectedABV = alcohol.Calculate(r.expectedOG, r.expectedFG)

@@ -5,13 +5,17 @@ import (
 )
 
 type Response struct {
-	Bitterness             []Bitterness `json:"bitterness,omitempty"`
-	Alcohol                Alcohol      `json:"alcohol,omitempty"`
-	Color                  Color        `json:"color,omitempty"`
-	ExpectedPreBoilDensity Density      `json:"expected_pre_boil_density,omitempty"`
-	ExpectedOG             Density      `json:"expected_og,omitempty"`
-	ExpectedFG             Density      `json:"expected_fg,omitempty"`
-	ExpectedABV            Alcohol      `json:"expected_abv,omitempty"`
+	Bitterness []Bitterness `json:"bitterness,omitempty"`
+	Alcohol    Alcohol      `json:"alcohol,omitempty"`
+	Color      Color        `json:"color,omitempty"`
+	Expected   Expected     `json:"expected"`
+}
+
+type Expected struct {
+	PBG     Density `json:"pbg,omitempty"`
+	OG      Density `json:"og,omitempty"`
+	FG      Density `json:"fg,omitempty"`
+	Alcohol Alcohol `json:"alcohol,omitempty"`
 }
 
 func BuildRecipe(r Recipe) *recipe.Recipe {
@@ -30,12 +34,14 @@ func BuildRecipe(r Recipe) *recipe.Recipe {
 
 func BuildResponse(r recipe.Recipe) Response {
 	return Response{
-		Bitterness:             parseFromBitterness(r.Bitterness()),
-		Color:                  parseFromColor(r.Color()),
-		Alcohol:                parseFromAlcohol(r.Alcohol()),
-		ExpectedPreBoilDensity: parseFromDensity(r.ExpectedPreBoilDensity()),
-		ExpectedOG:             parseFromDensity(r.ExpectedOG()),
-		ExpectedFG:             parseFromDensity(r.ExpectedFG()),
-		ExpectedABV:            parseFromAlcohol(r.ExpectedAlcohol()),
+		Bitterness: parseFromBitterness(r.Bitterness()),
+		Color:      parseFromColor(r.Color()),
+		Alcohol:    parseFromAlcohol(r.Alcohol()),
+		Expected: Expected{
+			PBG:     parseFromDensity(r.ExpectedPBG()),
+			OG:      parseFromDensity(r.ExpectedOG()),
+			FG:      parseFromDensity(r.ExpectedFG()),
+			Alcohol: parseFromAlcohol(r.ExpectedAlcohol()),
+		},
 	}
 }
